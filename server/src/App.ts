@@ -15,7 +15,7 @@ class App {
   }
 
   public start() {
-    // mongoose.connect('mongodb://localhost:27017/myDatabase').then(() => {
+    // mongoose.connect(process.env.DATABSE_CONNECT).then(() => {
     this.access.adapterMethod()
     this.app.listen(this.port, () => {
       console.log('Server is running on port 3000');
