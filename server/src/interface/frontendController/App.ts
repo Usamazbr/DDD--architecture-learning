@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import { Port1 } from "./applicaion/gateways/ports/port.js";
+import { Port1 } from "../../applicaion/gateways/ports/port.js";
 
 class App {
   private app: Application;
@@ -7,8 +7,8 @@ class App {
   private access: Port1
   private port : number;
 
-  constructor(app: Application,port_1: number) {
-    this.port = port_1
+  constructor(app: Application,port_main: number) {
+    this.port = port_main
     this.app = app;
     this.access = new Port1(this.app)
 

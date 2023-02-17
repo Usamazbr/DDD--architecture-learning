@@ -9,7 +9,7 @@ export class ExpressAdapter {
   constructor(app: Application) {
     this.app = app;
   }
-
+  
   public configureRoutes(useCase: UseCase) {
     this.app.get('/users', (_, res) => {
       const users = useCase.getUsers();

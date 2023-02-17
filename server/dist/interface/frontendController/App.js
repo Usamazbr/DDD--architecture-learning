@@ -1,4 +1,4 @@
-import { Port1 } from "./applicaion/gateways/ports/port.js";
+import { Port1 } from "../../applicaion/gateways/ports/port.js";
 class App {
     app;
     access;
