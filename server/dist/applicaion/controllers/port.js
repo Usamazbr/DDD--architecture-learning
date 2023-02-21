@@ -1,4 +1,4 @@
-import { ExpressAdapter } from "../gateways/ports/port.js";
+import { ExpressAdapter } from "../gateways/ports/adapter.js";
 import { UseCase } from "../../domain/services/useCase.js";
 export class Port1 {
     app;

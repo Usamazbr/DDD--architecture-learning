@@ -1,24 +1,27 @@
-import { Port1 } from "../../applicaion/gateways/ports/port.js";
+import mongoose from 'mongoose';
+import { Port1 } from "../../applicaion/controllers/adapter.js";
 class App {
     app;
-    access;
     port;
-    constructor(app, port_main) {
-        this.port = port_main;
+    mongoCreds;
+    access;
+    constructor(app, port, mongoCreds) {
         this.app = app;
+        this.port = port;
+        this.mongoCreds = mongoCreds;
         this.access = new Port1(this.app);
     }
     start() {
-        // mongoose.connect(process.env.DATABSE_CONNECT).then(() => {
-        // console.log("connected to \x1b[34mMongoDb\x1b[0m");
-        this.access.adapterMethod();
-        this.app.listen(this.port, () => {
-            console.log(`Server is running on port \x1b[33m${this.port}\x1b[0m`);
+        mongoose.connect(this.mongoCreds).then(() => {
+            console.log("\nconnected to \x1b[34mMongoDb\x1b[0m");
+            this.access.adapterMethod();
+            this.app.listen(this.port, () => {
+                console.log(`Server is running on port \x1b[33m${this.port}\x1b[0m`);
+            });
+        })
+            .catch((err) => {
+            console.log(err);
         });
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        // });
     }
 }
 export default App;

@@ -1,26 +1,24 @@
-import { UseCase } from '../../domain/services/useCase.js';
-// import { HelloWorldController } from "../controllers/useController.js";
-import express, { Application } from 'express';
+import { Application } from "express";
+import { ExpressAdapter } from "../gateways/ports/port.js";
+import { UseCase } from "../../domain/services/useCase.js";
 
-export class ExpressAdapter {
-    public router = express.Router();
-    private app: Application;
 
-  constructor(app: Application) {
-    this.app = app;
-  }
+export class Port1 {
+  private app: Application;
+  private adapter: ExpressAdapter;
+  private useCase: UseCase;
 
-  public configureRoutes(useCase: UseCase) {
-    this.app.get('/users', (_, res) => {
-      const users = useCase.getUsers();
-      console.log(users)
-      try{
-    //   json(users);
-      res.status(200).send(users)
-    } catch (err) {
-        console.log(err);
-        res.status(404).json({ err: err });
-      }
-    });
-  }
+    constructor(app: Application) {
+      this.app = app;
+        
+      this.adapter = new ExpressAdapter(this.app);
+      this.useCase = new UseCase();
+    }
+
+    /**
+     * adapterMethod
+     */
+    public adapterMethod() {
+      this.adapter.configureRoutes(this.useCase);
+    }
 }
