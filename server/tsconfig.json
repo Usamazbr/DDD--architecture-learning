@@ -1,12 +1,36 @@
 {
     "compilerOptions": {
+      "experimentalDecorators": true,
       "target": "ES2022",
       "module": "NodeNext",
       "outDir": "./dist",
       "rootDir": "./src",
       "strict": true,
       "moduleResolution": "NodeNext",
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
+    "removeComments": true,                           /* Disable emitting comments. */
+    "noEmit": true,
+    "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
+    "jsx": "react-jsx",
+    "noUnusedLocals": false,                           /* Enable error reporting when local variables aren't read. */
+    "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
+    "noImplicitReturns": true,                        /* Enable error reporting for codepaths that do not explicitly return in a function. */
+  
     },
   "include": ["src/**/*"],
 //   "exclude": ["node_modules"]

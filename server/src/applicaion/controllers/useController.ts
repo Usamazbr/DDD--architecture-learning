@@ -1,13 +1,13 @@
-import express from "express";
+// import express from "express";
 
-export class HelloWorldController {
-    public router = express.Router();
+// export class HelloWorldController {
+//     public router = express.Router();
   
-    constructor() {
-      this.router.get("/", this.firstMessage);
-    }
+//     constructor() {
+//       this.router.get("/", this.firstMessage);
+//     }
   
-    private firstMessage = (request: express.Request, response: express.Response) => {
-      response.send("Hi, mom");
-    };
-  }
+//     private firstMessage = (request: express.Request, response: express.Response) => {
+//       response.send("Hi, mom");
+//     };
+//   }
