@@ -1,0 +1,83 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+interface LoginResponse {
+  success: boolean;
+  message: string;
+}
+
+interface User {
+  name: string;
+  email: string;
+}
+
+interface ProfileResponse {
+  success: boolean;
+  message: string;
+  user?: User;
+}
+
+export default function App() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [profile, setProfile] = useState<User | null>(null);
+
+  async function handleLogin() {
+    try {
+      const response = await axios.post<LoginResponse>('/api/login', {
+        username,
+        password,
+      });
+      if (response.data.success) {
+        setLoggedIn(true);
+        await handleProfile();
+      } else {
+        alert(response.data.message);
+      }
+    } catch (e) {
+      console.error(e);
+      alert('An error occurred. Please try again.');
+    }
+  }
+
+  async function handleProfile() {
+    try {
+      const response = await axios.get<ProfileResponse>('/api/profile');
+      if (response.data.success) {
+        setProfile(response.data.user || null);
+      } else {
+        setLoggedIn(false);
+        setProfile(null);
+      }
+    } catch (e) {
+      console.error(e);
+      alert('An error occurred. Please try again.');
+    }
+  }
+
+  function handleLogout() {
+    axios.post('/api/logout').then(() => {
+      setLoggedIn(false);
+      setProfile(null);
+    });
+  }
+
+  return (
+    <div>
+      {loggedIn && (
+        <>
+          <p>Welcome, {profile?.name}!</p>
+          <button onClick={handleLogout}>Logout</button>
+        </>
+      )}
+      {!loggedIn && (
+        <>
+          <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+          <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+          <button onClick={handleLogin}>Login</button>
+        </>
+      )}
+    </div>
+  );
+}

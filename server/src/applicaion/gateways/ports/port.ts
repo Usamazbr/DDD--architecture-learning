@@ -11,8 +11,8 @@ export class ExpressAdapter {
   }
 
   public configureRoutes(useCase: UseCase) {
-    this.app.get('/users', (_, res) => {
-      const users = useCase.getUsers();
+    this.app.get('/users', async (_, res) => {
+      const users = await useCase.getUsers();
       console.log(users)
       try{
     //   json(users);

@@ -1,10 +1,11 @@
-import express from "express";
-export class HelloWorldController {
-    router = express.Router();
-    constructor() {
-        this.router.get("/", this.firstMessage);
-    }
-    firstMessage = (request, response) => {
-        response.send("Hi, mom");
-    };
-}
+// import express from "express";
+export {};
+// export class HelloWorldController {
+//     public router = express.Router();
+//     constructor() {
+//       this.router.get("/", this.firstMessage);
+//     }
+//     private firstMessage = (request: express.Request, response: express.Response) => {
+//       response.send("Hi, mom");
+//     };
+//   }

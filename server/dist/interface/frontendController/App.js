@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Port1 } from "../../applicaion/controllers/adapter.js";
+import { Adapter1 } from "../../applicaion/controllers/adapter.js";
 class App {
     app;
     port;
@@ -9,9 +9,10 @@ class App {
         this.app = app;
         this.port = port;
         this.mongoCreds = mongoCreds;
-        this.access = new Port1(this.app);
+        this.access = new Adapter1(this.app);
     }
     start() {
+        mongoose.set('strictQuery', true);
         mongoose.connect(this.mongoCreds).then(() => {
             console.log("\nconnected to \x1b[34mMongoDb\x1b[0m");
             this.access.adapterMethod();

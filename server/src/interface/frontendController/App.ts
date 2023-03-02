@@ -1,16 +1,17 @@
 import express, { Application } from "express";
 import mongoose from 'mongoose'
-import { Port1 } from "../../applicaion/controllers/adapter.js";
+import { Adapter1 } from "../../applicaion/controllers/adapter.js";
 
 class App {
 
-  private access: Port1
+  private access: Adapter1
 
   constructor(private app: Application,private port: number, private mongoCreds:string) {
-    this.access = new Port1(this.app)
+    this.access = new Adapter1(this.app)
   }
 
   public start() {
+    mongoose.set('strictQuery', true);
     mongoose.connect(this.mongoCreds).then(() => {
     console.log("\nconnected to \x1b[34mMongoDb\x1b[0m");
     this.access.adapterMethod()
