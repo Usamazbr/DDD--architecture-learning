@@ -1,11 +1,19 @@
-// import express from "express";
-export {};
-// export class HelloWorldController {
-//     public router = express.Router();
-//     constructor() {
-//       this.router.get("/", this.firstMessage);
-//     }
-//     private firstMessage = (request: express.Request, response: express.Response) => {
-//       response.send("Hi, mom");
-//     };
-//   }
+// import { ExpressAdapter } from "../gateways/ports/port.js";
+import { ExpressAdapter } from "../gateways/routes/userRoute.js";
+import { UseCase } from "../../domain/services/useCase.js";
+export class userAdapter {
+    app;
+    adapter;
+    useCase;
+    constructor(app) {
+        this.app = app;
+        this.adapter = new ExpressAdapter(this.app);
+        this.useCase = new UseCase();
+    }
+    /**
+     * adapterMethod
+     */
+    adapterMethod() {
+        this.adapter.configureRoutes(this.useCase);
+    }
+}

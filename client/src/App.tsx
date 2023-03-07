@@ -19,7 +19,7 @@ interface User {
 // }
 
 const Auth = () => {
-  const apiurl = useRef<string>("http://localhost:8080/");
+  const apiurl = useRef<string>("http://localhost:8081/");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
@@ -145,11 +145,11 @@ const FetchUsers = () => {
 const App = () => {
   return (
     <div className="flex flex-col w-screen h-screen">
-      <div className="flex flex-row px-2 h-28 border rounded-lg">
+      <div className="flex flex-row m-1 px-2 h-28 border rounded-lg">
         <h1 className="font-bold text-5xl p-2 my-auto">TODO App</h1>
       </div>
       <div className="flex flex-row my-20 w-full">
-        <div className="w-1/2 mx-auto shadow-lg border rounded-lg">
+        <div className="w-1/2 ml-4 mx-auto shadow-lg shadow-slate-500/50 border rounded-lg">
           <FetchUsers />
         </div>
         <div className="w-1/2 px-20">
