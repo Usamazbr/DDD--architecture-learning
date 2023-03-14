@@ -1,12 +1,18 @@
 import express from "express";
-import cors from 'cors';
-import * as dotenv from "dotenv";
-dotenv.config();
+import cors from "cors";
+import { fetchConfig, PORT_T } from "./framework/config/config.js";
 import App from "./interface/frontendController/App.js";
 const expApp = express();
 expApp.use(cors({}));
-const testServer = new App(expApp, Number(process.env.PORT), String(process.env.DATABSE_CONNECT));
+const configuration = { port: PORT_T };
+const testServer = new App(expApp, configuration);
 // app.listen();
 testServer.startTest();
-const server2 = new App(expApp, Number(process.env.PORT_2), String(process.env.DATABSE_CONNECT));
-server2.start();
+//TODO Main App
+const mainApp = async () => {
+    const configuration = await fetchConfig();
+    // console.log(configuration);
+    const server2 = new App(expApp, configuration);
+    server2.start();
+};
+mainApp();

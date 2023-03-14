@@ -1,14 +1,18 @@
+import { uuid } from "uuidv4";
+import { EmailValueObject } from "../valueObjects/emailValueObject.js";
+import { NameValueObject } from "../valueObjects/nameValueObject.js";
+import { PasswordValueObject } from "../valueObjects/passwordValueObject.js";
 // User Entity
-export class User {
+export class UserEntity {
     id;
     name;
     email;
     password;
-    constructor(id, name, email, password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    constructor(name, email, password) {
+        this.id = uuid();
+        this.name = new NameValueObject(name);
+        this.email = new EmailValueObject(email);
+        this.password = new PasswordValueObject(password);
     }
     getId() {
         return this.id;
@@ -22,13 +26,21 @@ export class User {
     getPassword() {
         return this.password;
     }
-    setName(name) {
-        this.name = name;
+    updateName(name) {
+        this.name = new NameValueObject(name);
     }
-    setEmail(email) {
-        this.email = email;
+    updateEmail(email) {
+        this.email = new EmailValueObject(email);
     }
-    setPassword(password) {
-        this.password = password;
+    updatePassword(password) {
+        this.password = new PasswordValueObject(password);
+    }
+    toDTO() {
+        return {
+            id: this.id,
+            name: this.name,
+            email: this.email,
+            password: this.password
+        };
     }
 }

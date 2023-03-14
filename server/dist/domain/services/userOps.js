@@ -1,4 +1,4 @@
-import { User } from "../entities/User.js";
+import { UserEntity } from "../entities/User.js";
 export class AuthUseCase {
     Token;
     Encrypt;
@@ -9,6 +9,6 @@ export class AuthUseCase {
     async loginUser() {
         // console.log("\x1b[33madminControl line 22:\x1b[0m ");
         // console.log(data);
-        const user = new User({}, {}, {}, {});
+        const user = new UserEntity({}, {}, {});
     }
 }

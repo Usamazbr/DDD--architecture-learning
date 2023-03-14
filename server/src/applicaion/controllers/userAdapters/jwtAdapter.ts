@@ -3,17 +3,14 @@ import jwt from "jsonwebtoken";
 import {Token, TokenFactory} from "../../usecases/ports/port2.js";
 
 class JwtToken implements Token {
-  private _id: string;
-
-  constructor(private id: string) {
-    this._id = id;
-  }
-
   /**
    * tokenGenerator
    */
-  public tokenGenerator(): string {
-    return jwt.sign({_id: this._id}, String(process.env.SECRET), {expiresIn: "1d"});
+  public tokenGenerator(_id: string, time: string) {
+    const expiryTime = new Date();
+    expiryTime.setDate(expiryTime.getDate() + 1);
+    const token = jwt.sign({_id}, String(process.env.SECRET), {expiresIn: time});
+    return {token, expiryTime};
   }
 
   /**
@@ -41,15 +38,11 @@ class JwtToken implements Token {
 }
 
 export class JwtAdapter extends TokenFactory {
-  constructor() {
-    super();
-  }
-
   /**
    * encryptionMethod
    */
-  public tokenMethod(_id: string): Token {
+  public tokenMethod(): Token {
     // this.createToken()
-    return new JwtToken(_id);
+    return new JwtToken();
   }
 }

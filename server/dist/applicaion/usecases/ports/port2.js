@@ -2,18 +2,30 @@
 // import { Application} from 'express';
 //TODO Authenticator
 export class TokenFactory {
-    createToken(id) {
+    createToken(id, time) {
         // Call the factory method to create a Product object.
-        const token = this.tokenMethod(id);
+        const token = this.tokenMethod();
         // Now, use the product.
-        return `Creator: The same creator's code has just worked with ${token.tokenGenerator()}`;
+        return token.tokenGenerator(id, time);
+    }
+    verifyToken(req, res, next) {
+        // Call the factory method to create a Product object.
+        const token = this.tokenMethod();
+        // Now, use the product.
+        token.tokenVerifier(req, res, next);
     }
 }
 export class EncryptFactory {
-    someOperation() {
+    encryptionOperation(password) {
         // Call the factory method to create a Product object.
         const encryption = this.encryptionMethod();
         // Now, use the product.
-        return `Creator: The same creator's code has just worked with ${encryption.operation()}`;
+        return encryption.encryption(password);
+    }
+    compareEncryptionOperation(password, hashed) {
+        // Call the factory method to create a Product object.
+        const encryption = this.encryptionMethod();
+        // Now, use the product.
+        return encryption.compare(password, hashed);
     }
 }

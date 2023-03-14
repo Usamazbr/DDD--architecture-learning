@@ -1,13 +1,24 @@
+import bcrypt from "bcrypt";
 import { EncryptFactory } from "../../usecases/ports/port2.js";
 class BcryptEncryption {
-    operation() {
-        return "";
+    /**
+     * encryption
+     */
+    async encryption(password) {
+        const salt = 10;
+        const enrate = await bcrypt.genSalt(salt);
+        const hashed = await bcrypt.hash(password, enrate);
+        return { hashed, level: salt };
+    }
+    /**
+     * compare
+     */
+    async compare(password, hash) {
+        const match = await bcrypt.compare(password, hash);
+        return match;
     }
 }
 export class BcryptAdapter extends EncryptFactory {
-    constructor() {
-        super();
-    }
     /**
      * encryptionMethod
      */
