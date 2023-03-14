@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { MongoClient, ObjectId } from "mongodb";
 export const PORT_T = Number(process.env.PORT);
 const config_db = process.env.CONFIG_DB;
-const config_id = process.env.TESTING;
+const config_id = process.env.DEVELOPMENT;
 const dbName = "config";
 const collectionName = "DDD_config";
 export async function fetchConfig() {

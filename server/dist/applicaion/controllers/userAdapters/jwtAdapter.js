@@ -1,6 +1,6 @@
 // import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { TokenFactory } from "../../usecases/ports/port2.js";
+import { TokenFactory } from "../../usecases/ports/userInterfacePorts/tokenPort.js";
 class JwtToken {
     /**
      * tokenGenerator
