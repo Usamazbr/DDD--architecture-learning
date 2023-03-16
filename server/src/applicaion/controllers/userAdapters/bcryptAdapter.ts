@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import {EncryptFactory} from "../../usecases/ports/userInterfacePorts/encryptionPort.js";
-import {Encryption} from "../../usecases/ports/userInterfacePorts/types/typesEncrypt.js";
+import {EncryptFactory} from "../../ports/userInterfacePorts/encryptionPort.js";
+import {Encryption} from "../../ports/userInterfacePorts/types/typesEncrypt.js";
 
 class BcryptEncryption implements Encryption {
   /**

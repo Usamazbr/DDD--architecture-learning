@@ -1,6 +1,6 @@
-import { UseCase } from '../../../domain/services/useCase.js';
+import {UseCase} from "../../domain/services/useCase.js";
 // import { HelloWorldController } from "../controllers/useController.js";
-import express, { Application } from 'express';
+import express, {Application} from "express";
 
 export class ExpressAdapter {
   public router = express.Router();
@@ -11,15 +11,15 @@ export class ExpressAdapter {
   }
 
   public configureRoutes(useCase: UseCase) {
-    this.app.get('/users', async (_, res) => {
+    this.app.get("/users", async (_, res) => {
       const users = await useCase.getUsers();
-      console.log(users)
+      console.log(users);
       try {
         //   json(users);
-        res.status(200).send(users)
+        res.status(200).send(users);
       } catch (err) {
         console.log(err);
-        res.status(404).json({ err: err });
+        res.status(404).json({err: err});
       }
     });
   }

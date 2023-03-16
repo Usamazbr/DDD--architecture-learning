@@ -1,9 +1,9 @@
-import {EncryptFactory} from "../../applicaion/usecases/ports/userInterfacePorts/encryptionPort.js";
-import {TokenFactory} from "../../applicaion/usecases/ports/userInterfacePorts/tokenPort.js";
+import {EncryptFactory} from "../../applicaion/ports/userInterfacePorts/encryptionPort.js";
+import {TokenFactory} from "../../applicaion/ports/userInterfacePorts/tokenPort.js";
 import {UserEntity} from "../entities/User.js";
 
 export class AuthUseCase {
-  constructor(private Token: TokenFactory, private Encrypt: EncryptFactory) {}
+  constructor(private Token: TokenFactory, private Encrypt: EncryptFactory, private UserDb: string) {}
   public async loginUser(req: any, res: any): Promise<void> {
     // console.log("\x1b[33madminControl line 22:\x1b[0m ");
     // console.log(data);

@@ -2,9 +2,11 @@ import { UserEntity } from "../entities/User.js";
 export class AuthUseCase {
     Token;
     Encrypt;
-    constructor(Token, Encrypt) {
+    UserDb;
+    constructor(Token, Encrypt, UserDb) {
         this.Token = Token;
         this.Encrypt = Encrypt;
+        this.UserDb = UserDb;
     }
     async loginUser(req, res) {
         // console.log("\x1b[33madminControl line 22:\x1b[0m ");

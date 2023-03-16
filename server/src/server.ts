@@ -4,6 +4,7 @@ import {fetchConfig, PORT_T} from "./framework/config/config.js";
 
 import App from "./interface/frontendController/App.js";
 import {Config} from "./types/configtypes.js";
+import {main} from "./domain/repos/testRepos.js";
 
 const expApp = express();
 expApp.use(cors({}));
@@ -18,8 +19,9 @@ const mainApp = async () => {
   const configuration: Config = await fetchConfig();
   // console.log(configuration);
   const server2 = new App(expApp, configuration);
+  main().catch((error) => console.error(error.message));
 
   server2.start();
 };
 
-mainApp();
+mainApp().catch((error) => console.log(error.message));
