@@ -18,34 +18,6 @@ export class UserEntity implements User {
     this.password = new PasswordValueObject(password);
   }
 
-  public getId(): string {
-    return this.id;
-  }
-
-  public getName(): NameValueObject {
-    return this.name;
-  }
-
-  public getEmail(): EmailValueObject {
-    return this.email;
-  }
-
-  public getPassword(): PasswordValueObject {
-    return this.password;
-  }
-
-  public updateName(name: string): void {
-    this.name = new NameValueObject(name);
-  }
-
-  public updateEmail(email: string): void {
-    this.email = new EmailValueObject(email);
-  }
-
-  public updatePassword(password: string): void {
-    this.password = new PasswordValueObject(password);
-  }
-
   public toDTO(): User {
     return {
       id: this.id,

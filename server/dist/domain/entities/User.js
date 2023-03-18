@@ -14,27 +14,6 @@ export class UserEntity {
         this.email = new EmailValueObject(email);
         this.password = new PasswordValueObject(password);
     }
-    getId() {
-        return this.id;
-    }
-    getName() {
-        return this.name;
-    }
-    getEmail() {
-        return this.email;
-    }
-    getPassword() {
-        return this.password;
-    }
-    updateName(name) {
-        this.name = new NameValueObject(name);
-    }
-    updateEmail(email) {
-        this.email = new EmailValueObject(email);
-    }
-    updatePassword(password) {
-        this.password = new PasswordValueObject(password);
-    }
     toDTO() {
         return {
             id: this.id,

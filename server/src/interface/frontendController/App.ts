@@ -1,16 +1,20 @@
 import {Application} from "express";
-import mongoose from "mongoose";
 import {testAdapter} from "../../applicaion/controllers/adapter.js";
 import {userController} from "../../applicaion/controllers/userController.js";
+// import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
+import {ConnecPrisma} from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
+// import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 import {Config} from "../../types/configtypes.js";
 
 class App {
   private access: testAdapter;
   private userAccess: userController;
+  private connectionDb: ConnecPrisma;
 
   constructor(private app: Application, private config: Config) {
     this.access = new testAdapter(this.app);
     this.userAccess = new userController(this.app);
+    this.connectionDb = new ConnecPrisma(<string>this.config.db_connect);
   }
 
   //? Test App
@@ -26,12 +30,10 @@ class App {
   }
 
   //TODO user
-  public start() {
+  public async start() {
     try {
-      mongoose.set("strictQuery", true);
-      mongoose.createConnection(<string>this.config.db_connect);
+      await this.connectionDb.connectionMethod();
 
-      console.log("\nconnected to \x1b[34mMongoDb\x1b[0m");
       this.userAccess.adapterMethod();
       this.app.listen(this.config.port, () => {
         console.log(`Server_1 is running on port \x1b[33m${this.config.port}\x1b[0m`);

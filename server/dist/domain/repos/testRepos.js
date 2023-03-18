@@ -1,11 +1,19 @@
-// import faker from 'faker'
 import { PrismaClient } from "@prisma/client";
 const { user } = new PrismaClient();
 export async function main() {
-    const user1 = await user.create({ data: { name: `Usama3`, email: `usama3@abc.com`, password: `asdfsdaf` } });
+    //   let user1 = await user.create({
+    //     data: {
+    //       name: casual.name,
+    //       email: casual.email,
+    //       password: casual.password
+    //     }
+    //   });
+    //   const user1 = await user.deleteMany();
+    const user1 = await user.findMany();
     console.log(user1);
+    //   await user.deleteMany();
 }
-main().catch((error) => console.error(error.message));
+// main().catch((error) => console.error(error.message));
 // // Static factory class for creating user authentication adapters
 // class UserAuthAdapterFactory {
 //     static createAdapter(databaseConfig: DatabaseConfig): IUserAuthAdapterTypeORMMongo | IUserAuthAdapterPrismaMySQL {

@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import {fetchConfig, PORT_T} from "./framework/config/config.js";
+import {fetchConfig, PORT_T} from "../src/framework/config/config.js";
 
-import App from "./interface/frontendController/App.js";
-import {Config} from "./types/configtypes.js";
-import {main} from "./infrastructure/databases/prisma/testPrismaRepos.js";
+import App from "../src/interface/frontendController/App.js";
+import {Config} from "../src/types/configtypes.js";
+import {main} from "../src/infrastructure/databases/prisma/testPrismaRepos";
 
 const expApp = express();
 expApp.use(cors({}));
@@ -19,7 +19,7 @@ const mainApp = async () => {
   const configuration: Config = await fetchConfig();
   // console.log(configuration);
   const server2 = new App(expApp, configuration);
-  // main().catch((e) => console.error(e));
+  main().catch((e) => console.error(e));
   // .finally(async () => await prisma.$disconnect());
 
   await server2.start();
