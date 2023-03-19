@@ -12,7 +12,9 @@ export class ConnecPrisma extends Connect {
       console.log(`Prisma method invoked`);
 
       const userRepository = new PrismaORMUserRepository(new PrismaClient());
-      console.log(await userRepository.findById(`4483453d-c7e5-4b58-977d-8d0d0871fc7e`));
+      // console.log(await userRepository.findById(`4483453d-c7e5-4b58-977d-8d0d0871fc7e`));
+      // console.log(await userRepository.callAll());
+
       console.log("\nconnected to \x1b[34mPrisma\x1b[0m");
     } catch (err) {
       console.error(`Data Source initialization error`, err);
