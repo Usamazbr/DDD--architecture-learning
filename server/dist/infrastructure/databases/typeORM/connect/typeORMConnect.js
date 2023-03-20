@@ -22,6 +22,7 @@ export class ConnectTypeORM extends Connect {
             const connection = await dataSource.initialize();
             console.log(connection);
             console.log("\nconnected to \x1b[34mTypeORM\x1b[0m");
+            return connection;
         }
         catch (err) {
             console.error(`Data Source initialization error`, err);

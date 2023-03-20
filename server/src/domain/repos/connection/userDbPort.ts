@@ -2,5 +2,5 @@ export abstract class Connect {
   /**
    * connectionMethod
    */
-  public abstract connectionMethod(): void;
+  public abstract connectionMethod(): any;
 }

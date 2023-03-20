@@ -2,13 +2,14 @@ import { UserEntity } from "../entities/User.js";
 export class AuthUseCase {
     Token;
     Encrypt;
-    UserDb;
-    constructor(Token, Encrypt, UserDb) {
+    UserRepos;
+    constructor(Token, Encrypt, UserRepos) {
         this.Token = Token;
         this.Encrypt = Encrypt;
-        this.UserDb = UserDb;
+        this.UserRepos = UserRepos;
     }
     async loginUser(req, res) {
+        // this.UserRepos
         // console.log("\x1b[33madminControl line 22:\x1b[0m ");
         // console.log(data);
         const { email, password } = req.body;

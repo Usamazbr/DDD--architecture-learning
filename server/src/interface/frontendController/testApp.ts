@@ -1,5 +1,5 @@
 import {Application} from "express";
-import {testAdapter} from "../../applicaion/controllers/adapter.js";
+import {testAdapter} from "../../applicaion/controllers/testAdapter.js";
 import {Config} from "../../types/configtypes.js";
 
 export class TestApp {

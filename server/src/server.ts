@@ -13,7 +13,6 @@ expApp.use(cors({}));
 //? Test App
 const configuration: Config = {port: PORT_T};
 const testServer = new TestApp(expApp, configuration);
-// app.listen();
 
 testServer.startTest();
 

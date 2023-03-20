@@ -1,9 +1,11 @@
-export class ExpressAdapter {
+import { crudLogs } from "../log/crudLogs.js";
+export class userRouteAdapter {
     app;
     constructor(app) {
         this.app = app;
     }
     userLoginRoute(useCase) {
+        this.app.use(crudLogs);
         this.app.post("/api/user/login", async ({ body }, res) => {
             const response = await useCase.loginUser(body.email, body.password);
             console.log(response);

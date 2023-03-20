@@ -1,4 +1,4 @@
-import { testAdapter } from "../../applicaion/controllers/adapter.js";
+import { testAdapter } from "../../applicaion/controllers/testAdapter.js";
 export class TestApp {
     app;
     config;

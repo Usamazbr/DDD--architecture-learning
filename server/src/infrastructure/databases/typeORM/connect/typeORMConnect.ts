@@ -6,7 +6,7 @@ export class ConnectTypeORM extends Connect {
   constructor(private DB_Address: string) {
     super();
   }
-  public async connectionMethod(): Promise<void> {
+  public async connectionMethod(): Promise<any> {
     const dataSource = new DataSource({
       type: `mongodb`,
       url: this.DB_Address,
@@ -21,6 +21,7 @@ export class ConnectTypeORM extends Connect {
       const connection = await dataSource.initialize();
       console.log(connection);
       console.log("\nconnected to \x1b[34mTypeORM\x1b[0m");
+      return connection;
     } catch (err) {
       console.error(`Data Source initialization error`, err);
     }

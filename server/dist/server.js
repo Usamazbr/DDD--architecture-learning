@@ -9,7 +9,6 @@ expApp.use(cors({}));
 //? Test App
 const configuration = { port: PORT_T };
 const testServer = new TestApp(expApp, configuration);
-// app.listen();
 testServer.startTest();
 //TODO Main App
 const mainApp = async () => {
