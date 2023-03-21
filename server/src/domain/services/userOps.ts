@@ -1,33 +1,85 @@
 import {EncryptFactory} from "../../applicaion/ports/userInterfacePorts/encryptionPort.js";
 import {TokenFactory} from "../../applicaion/ports/userInterfacePorts/tokenPort.js";
-import {UserEntity} from "../entities/User.js";
+// import {UserEntity} from "../entities/User.js";
 import {UserRepository} from "../repos/userRespository/userRepos.js";
+import casual from "casual";
+import {User} from "../entities/types/typesUser.js";
+// interface bodyType {
+//   email: string;
+//   password: string;
+// }
 
 export class AuthUseCase<T> {
   constructor(private Token: TokenFactory, private Encrypt: EncryptFactory, private UserRepos: UserRepository<T>) {}
-  public async loginUser(req: any, res: any): Promise<void> {
-    // this.UserRepos
+
+  public async signupUser(name: string, email: string): Promise<T> {
+    let password = casual.password;
+    console.log(password);
+    const {hashed, level} = await this.Encrypt.encryptionOperation(password);
+    password = hashed;
+
+    let user = await this.UserRepos.create(<T>{name, email, password});
+    console.log(user);
+
+    return <T>user;
+  }
+
+  /**
+   * fetchAllUsers
+   */
+  public async fetchAllUsers(): Promise<T[]> {
+    const users = await this.UserRepos.callAll();
+    return <T[]>users;
+  }
+
+  public async loginUser(email: string, password: string): Promise<any> {
+    console.log(email);
+    console.log(password);
+    // const user1 = await this.UserRepos.callAll();
+
+    // console.log(user1);
+
     // console.log("\x1b[33madminControl line 22:\x1b[0m ");
     // console.log(data);
-    const {email, password} = req.body;
+    // const {email, password} = body;
 
     try {
-      const hashed: string = ``;
+      /**
+       * loginUser
+       */
+      if (!email || !password) {
+        throw Error("All fields must be filled");
+      }
+      const userDTO = await (<Promise<User>>this.UserRepos.findByEmail(email));
+      if (!userDTO) {
+        throw Error("Incorrect email");
+      }
+      // console.log("\x1b[33mline 58:\x1b[0m ");
+      // console.log(userDTO);`
+      // creating token
+      const tokenDTO = this.Token.createToken(`userDTO`, null);
+      // compare hash
+      const compareBool: boolean = await this.Encrypt.compareEncryptionOperation(
+        password,
+        <string>userDTO.password?.toString()
+      );
+      // console.log(compareBool);
+      if (!compareBool) {
+        throw Error("Incorrect password");
+      }
 
-      const hashedPassword = this.Encrypt.compareEncryptionOperation(password, hashed);
-      const user = new UserEntity(<any>{}, <any>{}, <any>{});
-
-      // const user = await User.login(email, password);
-
-      // // creating token
-      // const token = createToken(user._id);
-
-      // const admin = user.admin;
-      // const approve = user.approve;
-      // const path = user.path;
-      // res.status(200).json({ email, token, admin, approve, path });
+      // res.status(200).json({ email, token: tokenDTO.token});
+      return {user: userDTO, token: <string>tokenDTO.token};
     } catch (error: any) {
-      res.status(400).json({err: error.message});
+      console.log(`Error: ${error}`);
+      return false;
     }
+  }
+
+  /**
+   * delUser
+   */
+  public async delUser(id: string) {
+    await this.UserRepos.delete(id);
   }
 }

@@ -7,9 +7,13 @@ class JwtToken implements Token {
   /**
    * tokenGenerator
    */
-  public tokenGenerator(_id: string, time: string) {
+  public tokenGenerator(_id: string, time: string | null) {
     const expiryTime = new Date();
-    expiryTime.setDate(expiryTime.getDate() + 1);
+    if (time === null) {
+      console.log(`time is 1 day (default)`);
+      time = `1d`;
+      expiryTime.setDate(expiryTime.getDate() + 1);
+    }
     const token = jwt.sign({_id}, String(process.env.SECRET), {expiresIn: time});
     return {token, expiryTime};
   }

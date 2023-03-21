@@ -16,5 +16,14 @@ model User {
   updatedAt DateTime @default(now())
   name      String   @unique
   email     String   @unique
-  password  String?
+  password  String
+  Task      Task[]
+}
+
+model Task {
+  id        String   @id @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  author    User     @relation(fields: [userId], references: [id])
+  userId    String
 }

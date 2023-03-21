@@ -1,4 +1,4 @@
-export class PrismaORMUserRepository {
+export class PrismaORMTaskRepository {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
@@ -6,12 +6,6 @@ export class PrismaORMUserRepository {
     async findById(id) {
         const prismaUser = await this.prisma.user.findUnique({
             where: { id }
-        });
-        return prismaUser;
-    }
-    async findByEmail(email) {
-        const prismaUser = await this.prisma.user.findUnique({
-            where: { email }
         });
         return prismaUser;
     }

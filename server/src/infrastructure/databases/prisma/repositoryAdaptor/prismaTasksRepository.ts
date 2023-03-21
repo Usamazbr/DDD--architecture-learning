@@ -1,20 +1,12 @@
 import {PrismaClient, User} from "@prisma/client";
-import {UserRepository} from "../../../../domain/repos/userRespository/userRepos.js";
+import {TaskRepository} from "../../../../domain/repos/taskRepository/taskRepos.js";
 
-export class PrismaORMUserRepository implements UserRepository<User | null> {
+export class PrismaORMTaskRepository implements TaskRepository<User | null> {
   constructor(private prisma: PrismaClient) {}
 
   async findById(id: string): Promise<User | null> {
     const prismaUser = await this.prisma.user.findUnique({
       where: {id}
-    });
-
-    return prismaUser;
-  }
-
-  async findByEmail(email: string): Promise<User | null> {
-    const prismaUser = await this.prisma.user.findUnique({
-      where: {email}
     });
 
     return prismaUser;

@@ -1,41 +1,36 @@
 import {Application} from "express";
 
 import {userRouteAdapter} from "../gateways/routes/userRoute.js";
-import {AuthUseCase} from "../../domain/services/userOps.js";
-// import { UseCase } from "../../domain/services/useCase.js";
 
-import {BcryptAdapter} from "./userAdapters/bcryptAdapter.js";
 import {JwtAdapter} from "./userAdapters/jwtAdapter.js";
 
-import {UserRepository} from "../../domain/repos/userRespository/userRepos.js";
-import {User} from "@prisma/client";
+// import {Task} from "@prisma/client";
 import {ConnecPrisma} from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
+import {TaskUseCase} from "../../domain/services/taskOps.js";
+import {Task} from "../../domain/entities/types/typesTasks.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 
-export class userController {
-  private adapter: userRouteAdapter<User>;
-  private userAuth: AuthUseCase<User>;
+export class taskController {
+  private adapter: userRouteAdapter<Task>;
+  private taskAuth: TaskUseCase<Task>;
   private connectionDb: ConnecPrisma;
 
   constructor(private app: Application, private DB_Address: string) {
     this.connectionDb = new ConnecPrisma(<string>this.DB_Address);
     this.adapter = new userRouteAdapter(this.app);
     // this.connectionDb.connectionMethod();
-    this.userAuth = new AuthUseCase(
-      new JwtAdapter(),
-      new BcryptAdapter(),
-      <UserRepository<User>>this.connectionDb.connectionMethod()
-    );
+    this.taskAuth = new TaskUseCase(new JwtAdapter(), <TaskRepository<Task>>this.connectionDb.connectionMethod());
   }
 
   /**
    * adapterMethod
    */
   public async authMethod() {
-    this.adapter.userFetchAllRoute(this.userAuth);
-    this.adapter.userLoginRoute(this.userAuth);
-    this.adapter.userSignupRoute(this.userAuth);
-    this.adapter.delUserRoute(this.userAuth);
+    // this.adapter.userFetchAllRoute(this.taskAuth);
+    // this.adapter.userLoginRoute(this.taskAuth);
+    // this.adapter.userSignupRoute(this.taskAuth);
+    // this.adapter.delUserRoute(this.taskAuth);
   }
 }

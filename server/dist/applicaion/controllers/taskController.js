@@ -1,16 +1,15 @@
 import { userRouteAdapter } from "../gateways/routes/userRoute.js";
-import { AuthUseCase } from "../../domain/services/userOps.js";
-// import { UseCase } from "../../domain/services/useCase.js";
-import { BcryptAdapter } from "./userAdapters/bcryptAdapter.js";
 import { JwtAdapter } from "./userAdapters/jwtAdapter.js";
+// import {Task} from "@prisma/client";
 import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import { TaskUseCase } from "../../domain/services/taskOps.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
-export class userController {
+export class taskController {
     app;
     DB_Address;
     adapter;
-    userAuth;
+    taskAuth;
     connectionDb;
     constructor(app, DB_Address) {
         this.app = app;
@@ -18,15 +17,15 @@ export class userController {
         this.connectionDb = new ConnecPrisma(this.DB_Address);
         this.adapter = new userRouteAdapter(this.app);
         // this.connectionDb.connectionMethod();
-        this.userAuth = new AuthUseCase(new JwtAdapter(), new BcryptAdapter(), this.connectionDb.connectionMethod());
+        this.taskAuth = new TaskUseCase(new JwtAdapter(), this.connectionDb.connectionMethod());
     }
     /**
      * adapterMethod
      */
     async authMethod() {
-        this.adapter.userFetchAllRoute(this.userAuth);
-        this.adapter.userLoginRoute(this.userAuth);
-        this.adapter.userSignupRoute(this.userAuth);
-        this.adapter.delUserRoute(this.userAuth);
+        // this.adapter.userFetchAllRoute(this.taskAuth);
+        // this.adapter.userLoginRoute(this.taskAuth);
+        // this.adapter.userSignupRoute(this.taskAuth);
+        // this.adapter.delUserRoute(this.taskAuth);
     }
 }

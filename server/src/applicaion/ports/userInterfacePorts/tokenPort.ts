@@ -6,11 +6,11 @@ export abstract class TokenFactory {
    */
   public abstract tokenMethod(): Token;
 
-  public createToken(id: string, time: string): tokenDTO {
+  public createToken(id: string, time: string | null): tokenDTO {
     // Call the factory method to create a Product object.
     const token = this.tokenMethod();
     // Now, use the product.
-    return token.tokenGenerator(id, time);
+    return token.tokenGenerator(id, <string>time);
   }
 
   public verifyToken(req: any, res: any, next: any): void {
