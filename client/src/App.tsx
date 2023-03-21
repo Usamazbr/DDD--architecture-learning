@@ -90,6 +90,38 @@ const Signup = () => {
   );
 };
 
+interface Task {
+  id: string;
+  message: string;
+  userId: string;
+}
+
+const Tasks = () => {
+  const apiurl = useRef<string>(`http://localhost:8082`);
+  const [tasks, setTasks] = useState<Task[]>();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // console.log(token);
+    // const user = JSON.parse(localStorage.getItem("user"));
+    const config = {headers: {Authorization: `Bearer ${token}`}};
+    axios.get(`${apiurl.current}/api/tasks`, config).then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        setTasks(response.data);
+      }
+    });
+  }, []);
+
+  return (
+    <div className="flex flex-col border">
+      {tasks?.map((task) => (
+        <h2 key={task.id}>{task.message}</h2>
+      ))}
+    </div>
+  );
+};
+
 const Auth = (props: any) => {
   const apiurl = useRef<string>(`http://localhost:8082`);
   const [email, setUsername] = useState("");
@@ -147,15 +179,18 @@ const Auth = (props: any) => {
   }
 
   return (
-    <>
+    <div className="w-full">
       {loggedIn ? (
-        <>
-          <p>Welcome, {profile?.name}!</p>
-          <button onClick={handleLogout}>Logout</button>
-        </>
+        <div className="flex flex-col">
+          <div className="flex flex-row justify-evenly w-full">
+            <p>Welcome, {profile?.name}!</p>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+          <Tasks />
+        </div>
       ) : !props.signuptoggle ? (
         <form
-          className="flex flex-col w-full m-auto p-5 bg-gradient-to-b from-blue-900 to-purple-900 text-slate-300 
+          className="flex flex-col w-full p-5 bg-gradient-to-b from-blue-900 to-purple-900 text-slate-300 
         shadow-lg shadow-slate-500/50 rounded-lg"
           onSubmit={handleLogin}>
           <h3 className="m-2 text-xl font-bold text-slate-300">Log In</h3>
@@ -194,7 +229,7 @@ const Auth = (props: any) => {
       ) : (
         <Signup />
       )}
-    </>
+    </div>
   );
 };
 
@@ -294,7 +329,7 @@ const App = () => {
             <span className="text-center">Toggle for sign up</span>
           </label>
         </div>
-        <div className={`w-5/12 px-20 border rounded-lg`}>
+        <div className={`w-5/12 border rounded-lg`}>
           <Auth signuptoggle={signuptoggle} />
         </div>
       </div>

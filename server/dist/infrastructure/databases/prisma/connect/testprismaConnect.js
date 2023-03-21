@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Connect } from "../../../../domain/repos/connection/userDbPort.js";
-export class ConnecPrisma extends Connect {
+// import {UserRepository} from "../../../../domain/repos/userRespository/userRepos.js";
+export class TestConnecPrisma extends Connect {
     DB_Address;
     client;
     constructor(DB_Address) {

@@ -5,5 +5,5 @@ export interface TaskRepository<T> {
   update(task: T): Promise<void>;
   delete(id: string): Promise<void>;
   purge(): Promise<void | undefined>;
-  callAll(): Promise<T[] | undefined>;
+  callUserTasks(id: string): Promise<T[] | undefined>;
 }

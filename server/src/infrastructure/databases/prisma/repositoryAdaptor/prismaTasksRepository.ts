@@ -1,41 +1,42 @@
-import {PrismaClient, User} from "@prisma/client";
+import {PrismaClient, Task} from "@prisma/client";
 import {TaskRepository} from "../../../../domain/repos/taskRepository/taskRepos.js";
 
-export class PrismaORMTaskRepository implements TaskRepository<User | null> {
+export class PrismaORMTaskRepository implements TaskRepository<Task | null> {
   constructor(private prisma: PrismaClient) {}
 
-  async findById(id: string): Promise<User | null> {
-    const prismaUser = await this.prisma.user.findUnique({
+  async findById(id: string): Promise<Task | null> {
+    const prismaTask = await this.prisma.task.findUnique({
       where: {id}
     });
 
-    return prismaUser;
+    return prismaTask;
   }
 
-  async create(user: User): Promise<User> {
-    console.log(user);
-    const prismaUser = await this.prisma.user.create({
+  async create(task: Task): Promise<Task> {
+    console.log(task);
+    const prismaTask = await this.prisma.task.create({
       data: {
-        name: user.name,
-        email: user.email,
-        password: user.password
+        message: task.message,
+        userId: task.userId
       }
     });
-    return prismaUser;
+    return prismaTask;
   }
 
-  async update(user: User): Promise<void> {}
+  async update(task: Task): Promise<void> {}
 
-  async callAll(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+  async callUserTasks(userId: string): Promise<Task[]> {
+    return await this.prisma.task.findMany({
+      where: {userId}
+    });
   }
 
   async purge(): Promise<void> {
-    await this.prisma.user.deleteMany();
+    await this.prisma.task.deleteMany();
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.user.delete({
+    await this.prisma.task.delete({
       where: {id}
     });
   }

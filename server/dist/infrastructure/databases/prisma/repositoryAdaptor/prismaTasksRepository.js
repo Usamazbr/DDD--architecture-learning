@@ -4,31 +4,32 @@ export class PrismaORMTaskRepository {
         this.prisma = prisma;
     }
     async findById(id) {
-        const prismaUser = await this.prisma.user.findUnique({
+        const prismaTask = await this.prisma.task.findUnique({
             where: { id }
         });
-        return prismaUser;
+        return prismaTask;
     }
-    async create(user) {
-        console.log(user);
-        const prismaUser = await this.prisma.user.create({
+    async create(task) {
+        console.log(task);
+        const prismaTask = await this.prisma.task.create({
             data: {
-                name: user.name,
-                email: user.email,
-                password: user.password
+                message: task.message,
+                userId: task.userId
             }
         });
-        return prismaUser;
+        return prismaTask;
     }
-    async update(user) { }
-    async callAll() {
-        return await this.prisma.user.findMany();
+    async update(task) { }
+    async callUserTasks(userId) {
+        return await this.prisma.task.findMany({
+            where: { userId }
+        });
     }
     async purge() {
-        await this.prisma.user.deleteMany();
+        await this.prisma.task.deleteMany();
     }
     async delete(id) {
-        await this.prisma.user.delete({
+        await this.prisma.task.delete({
             where: { id }
         });
     }

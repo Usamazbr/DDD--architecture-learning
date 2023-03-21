@@ -1,30 +1,21 @@
-// interface bodyType {
-//   email: string;
-//   password: string;
-// }
 export class TaskUseCase {
     Token;
-    UserRepos;
-    constructor(Token, UserRepos) {
+    TaskRepos;
+    constructor(Token, TaskRepos) {
         this.Token = Token;
-        this.UserRepos = UserRepos;
+        this.TaskRepos = TaskRepos;
     }
-    async signupUser(name, email) { }
     /**
      * fetchAllUsers
      */
-    async fetchAllUsers() {
-        const users = await this.UserRepos.callAll();
-        return users;
-    }
-    async loginUser(email, password) {
-        console.log(email);
-        console.log(password);
+    async fetchAllTasks(id) {
+        const tasks = await this.TaskRepos.callUserTasks(id);
+        return tasks;
     }
     /**
      * delUser
      */
-    async delUser(id) {
-        await this.UserRepos.delete(id);
+    async delTask(id) {
+        await this.TaskRepos.delete(id);
     }
 }
