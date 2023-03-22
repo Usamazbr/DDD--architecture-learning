@@ -12,8 +12,8 @@ class App {
 
   constructor(private app: Application, private config: Config) {
     // this.connectionDb = new ConnecPrisma(<string>this.config.db_connect);
-    this.userAccess = new userController(this.app, <string>this.config.db_connect);
-    this.taskAccess = new taskController(this.app, <string>this.config.db_connect);
+    this.userAccess = new userController(this.app, <Config>this.config);
+    this.taskAccess = new taskController(this.app, <Config>this.config);
   }
 
   //TODO user

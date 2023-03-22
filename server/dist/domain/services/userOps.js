@@ -4,11 +4,11 @@ import casual from "casual";
 //   password: string;
 // }
 export class AuthUseCase {
-    Token;
+    tokenAdapter;
     Encrypt;
     UserRepos;
-    constructor(Token, Encrypt, UserRepos) {
-        this.Token = Token;
+    constructor(tokenAdapter, Encrypt, UserRepos) {
+        this.tokenAdapter = tokenAdapter;
         this.Encrypt = Encrypt;
         this.UserRepos = UserRepos;
     }
@@ -31,11 +31,6 @@ export class AuthUseCase {
     async loginUser(email, password) {
         console.log(email);
         console.log(password);
-        // const user1 = await this.UserRepos.callAll();
-        // console.log(user1);
-        // console.log("\x1b[33madminControl line 22:\x1b[0m ");
-        // console.log(data);
-        // const {email, password} = body;
         try {
             /**
              * loginUser
@@ -47,10 +42,7 @@ export class AuthUseCase {
             if (!userDTO) {
                 throw Error("Incorrect email");
             }
-            // console.log("\x1b[33mline 58:\x1b[0m ");
-            // console.log(userDTO);`
-            // creating token
-            const tokenDTO = this.Token.createToken(`userDTO`, null);
+            const tokenDTO = this.tokenAdapter.createToken(userDTO.id, null);
             // compare hash
             const compareBool = await this.Encrypt.compareEncryptionOperation(password, userDTO.password?.toString());
             // console.log(compareBool);

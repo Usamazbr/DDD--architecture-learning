@@ -9,19 +9,21 @@ import { PrismaORMUserRepository } from "../../infrastructure/databases/prisma/r
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 export class userController {
     app;
-    DB_Address;
+    config;
     adapter;
     userAuth;
     userRepos;
     connectionDb;
-    constructor(app, DB_Address) {
+    // private tokenAdapter: JwtAdapter;
+    constructor(app, config) {
         this.app = app;
-        this.DB_Address = DB_Address;
-        this.connectionDb = new ConnecPrisma(this.DB_Address);
+        this.config = config;
+        this.connectionDb = new ConnecPrisma(this.config.db_connect);
         this.adapter = new userRouteAdapter(this.app);
         this.userRepos = new PrismaORMUserRepository(this.connectionDb.connectionMethod());
         // this.connectionDb.connectionMethod();
-        this.userAuth = new AuthUseCase(new JwtAdapter(), new BcryptAdapter(), this.userRepos);
+        // this.tokenAdapter = new JwtAdapter(<string>config.secret);
+        this.userAuth = new AuthUseCase(new JwtAdapter(config.secret), new BcryptAdapter(), this.userRepos);
     }
     /**
      * adapterMethod

@@ -1,8 +1,7 @@
-import {TokenFactory} from "../../applicaion/ports/userInterfacePorts/tokenPort.js";
 import {TaskRepository} from "../repos/taskRepository/taskRepos.js";
 
 export class TaskUseCase<T> {
-  constructor(private Token: TokenFactory, private TaskRepos: TaskRepository<T>) {}
+  constructor(private TaskRepos: TaskRepository<T>) {}
 
   /**
    * fetchAllUsers
@@ -17,5 +16,13 @@ export class TaskUseCase<T> {
    */
   public async delTask(id: string) {
     await this.TaskRepos.delete(id);
+  }
+
+  /**
+   * createTask
+   */
+  public async createTask(userId: string, message: string): Promise<T> {
+    const task = await this.TaskRepos.create(<T>{userId, message});
+    return <T>task;
   }
 }

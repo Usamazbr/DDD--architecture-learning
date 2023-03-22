@@ -9,31 +9,42 @@ import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
 import {PrismaClient, Task} from "@prisma/client";
 import {ConnecPrisma} from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import {PrismaORMTaskRepository} from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
+import {Config} from "../../types/configtypes.js";
+import {TaskFilter} from "../gateways/middleware/taskFilter.js";
 // import {Task} from "../../domain/entities/types/typesTasks.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 
 export class taskController {
-  private adapter: taskRouteAdapter<Task>;
+  private routeAdapter: taskRouteAdapter<Task>;
   private taskUseCase: TaskUseCase<Task>;
   private taskRepos: PrismaORMTaskRepository;
   private connectionDb: ConnecPrisma;
+  private tokenFilter: TaskFilter;
 
-  constructor(private app: Application, private DB_Address: string) {
-    this.connectionDb = new ConnecPrisma(<string>this.DB_Address);
-    this.adapter = new taskRouteAdapter(this.app);
+  constructor(private app: Application, private config: Config) {
+    this.connectionDb = new ConnecPrisma(<string>this.config.db_connect);
+    this.routeAdapter = new taskRouteAdapter(this.app);
     this.taskRepos = new PrismaORMTaskRepository(<PrismaClient>this.connectionDb.connectionMethod());
     // this.connectionDb.connectionMethod();
-    this.taskUseCase = new TaskUseCase(new JwtAdapter(), <TaskRepository<Task>>(<unknown>this.taskRepos));
+    // this.tokenFilter = new TaskFilter(new JwtAdapter(<string>config.secret));
+    this.tokenFilter = new TaskFilter(new JwtAdapter(<string>config.secret));
+    this.taskUseCase = new TaskUseCase(<TaskRepository<Task>>(<unknown>this.taskRepos));
   }
 
   /**
    * adapterMethod
    */
   public async taskMethod() {
+    // const bullshit = new TaskFilter(new JwtAdapter(`bullshit`));
+    console.log("\x1b[33mline 41:\x1b[0m ");
+    this.tokenFilter.bsmethod();
     //middleware
-    this.adapter.taskCreationRoute(this.taskUseCase);
-    this.adapter.taskFetchAllRoute(this.taskUseCase);
-    this.adapter.delTaskRoute(this.taskUseCase);
+    // this.app.use(this.tokenFilter.filterMethod);
+
+    //other functions
+    this.routeAdapter.taskCreationRoute(this.taskUseCase);
+    this.routeAdapter.taskFetchAllRoute(this.taskUseCase);
+    this.routeAdapter.delTaskRoute(this.taskUseCase);
   }
 }

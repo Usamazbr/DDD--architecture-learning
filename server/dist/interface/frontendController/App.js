@@ -9,8 +9,8 @@ class App {
         this.app = app;
         this.config = config;
         // this.connectionDb = new ConnecPrisma(<string>this.config.db_connect);
-        this.userAccess = new userController(this.app, this.config.db_connect);
-        this.taskAccess = new taskController(this.app, this.config.db_connect);
+        this.userAccess = new userController(this.app, this.config);
+        this.taskAccess = new taskController(this.app, this.config);
     }
     //TODO user
     async start() {

@@ -10,7 +10,11 @@ import {User} from "../entities/types/typesUser.js";
 // }
 
 export class AuthUseCase<T> {
-  constructor(private Token: TokenFactory, private Encrypt: EncryptFactory, private UserRepos: UserRepository<T>) {}
+  constructor(
+    private tokenAdapter: TokenFactory,
+    private Encrypt: EncryptFactory,
+    private UserRepos: UserRepository<T>
+  ) {}
 
   public async signupUser(name: string, email: string): Promise<T> {
     let password = casual.password;
@@ -35,13 +39,6 @@ export class AuthUseCase<T> {
   public async loginUser(email: string, password: string): Promise<any> {
     console.log(email);
     console.log(password);
-    // const user1 = await this.UserRepos.callAll();
-
-    // console.log(user1);
-
-    // console.log("\x1b[33madminControl line 22:\x1b[0m ");
-    // console.log(data);
-    // const {email, password} = body;
 
     try {
       /**
@@ -54,10 +51,7 @@ export class AuthUseCase<T> {
       if (!userDTO) {
         throw Error("Incorrect email");
       }
-      // console.log("\x1b[33mline 58:\x1b[0m ");
-      // console.log(userDTO);`
-      // creating token
-      const tokenDTO = this.Token.createToken(`userDTO`, null);
+      const tokenDTO = this.tokenAdapter.createToken(<string>userDTO.id, null);
       // compare hash
       const compareBool: boolean = await this.Encrypt.compareEncryptionOperation(
         password,

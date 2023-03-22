@@ -1,14 +1,22 @@
 export class TokenFactory {
+    /**
+     * secretKey
+     */
+    secretKey() {
+        const tokenAdapter = this.tokenMethod();
+        return tokenAdapter.secretOut();
+    }
     createToken(id, time) {
         // Call the factory method to create a Product object.
-        const token = this.tokenMethod();
+        const tokenAdapter = this.tokenMethod();
         // Now, use the product.
-        return token.tokenGenerator(id, time);
+        return tokenAdapter.tokenGenerator(id, time);
     }
-    verifyToken(req, res, next) {
+    verifyToken(token) {
+        console.log(token);
         // Call the factory method to create a Product object.
-        const token = this.tokenMethod();
+        const tokenAdapter = this.tokenMethod();
         // Now, use the product.
-        token.tokenVerifier(req, res, next);
+        tokenAdapter.tokenVerifier(token);
     }
 }

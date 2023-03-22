@@ -16,11 +16,12 @@ export class taskRouteAdapter<T> {
    */
   public taskCreationRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
-    // this.app.use(tasksFilter)
-    this.app.post("/api/tasks/", async ({body}, res) => {
+    // this.app.use(tasksFilter);
+    this.app.post("/api/tasks/", async ({body, user}, res) => {
+      console.log(body, user);
       try {
-        const response = await useCase.fetchAllTasks(body.userId);
-        res.status(200).send(response);
+        // const response = await useCase.createTask(``, body);
+        res.status(200).send(`response`);
       } catch (error) {
         console.log(error);
         res.status(404).json({error: error});
@@ -33,7 +34,7 @@ export class taskRouteAdapter<T> {
    */
   public taskFetchAllRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
-    this.app.use(tasksFilter);
+    // this.app.use(tasksFilter);
     this.app.get("/api/tasks/", async ({body}, res) => {
       try {
         const response = await useCase.fetchAllTasks(body.userId);
@@ -49,7 +50,8 @@ export class taskRouteAdapter<T> {
    */
   public delTaskRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
-    this.app.delete(`/api/user/:taskId`, async ({params}, res) => {
+    // this.app.use(tasksFilter);
+    this.app.delete(`/api/tasks/:taskId`, async ({params}, res) => {
       try {
         const response = await useCase.delTask(params.taskId);
       } catch (error) {}

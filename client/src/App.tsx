@@ -98,26 +98,48 @@ interface Task {
 
 const Tasks = () => {
   const apiurl = useRef<string>(`http://localhost:8082`);
+  const token = useRef<string>(localStorage.getItem("token"));
   const [tasks, setTasks] = useState<Task[]>();
+  const [newTask, setNewTask] = useState(``);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    // console.log(token);
-    // const user = JSON.parse(localStorage.getItem("user"));
-    const config = {headers: {Authorization: `Bearer ${token}`}};
+    const config = {headers: {Authorization: `Bearer ${token.current}`}};
     axios.get(`${apiurl.current}/api/tasks`, config).then((response) => {
+      console.log(response.data);
       if (response.status === 200) {
-        console.log(response.data);
         setTasks(response.data);
       }
     });
   }, []);
 
+  const handleTaskSubmit = (e: any) => {
+    e.preventDefault();
+    const config = {headers: {Authorization: `Bearer ${token.current}`}};
+    const body = newTask;
+    axios.post(`${apiurl.current}/api/tasks`, body, config).then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        setTasks((prev) => [response.data, ...[prev]]);
+      }
+    });
+  };
+
   return (
-    <div className="flex flex-col border">
-      {tasks?.map((task) => (
-        <h2 key={task.id}>{task.message}</h2>
-      ))}
+    <div className="flex flex-col space-y-2 p-1">
+      <form onSubmit={handleTaskSubmit} className="flex flex-row-reverse justify-evenly border rounded-lg">
+        <button className="px-2">⏎ </button>
+        <input
+          className="m-1 w-full p-1 px-2 bg-gray-800 rounded-md"
+          // type="password"
+          onChange={(e) => setNewTask(e.target.value)}
+          value={newTask}
+        />
+      </form>
+      <div className={`flex flex-col ${tasks && `border rounded-lg`}`}>
+        {tasks?.map((task) => (
+          <h2 key={task.id}>{task.message}</h2>
+        ))}
+      </div>
     </div>
   );
 };
@@ -129,6 +151,14 @@ const Auth = (props: any) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [profile, setProfile] = useState<User | null>(null);
   const [err, setErr] = useState();
+
+  useEffect(() => {
+    const userLogged = JSON.parse(localStorage.getItem("user") as string);
+    if (userLogged) {
+      setProfile(userLogged);
+      setLoggedIn(true);
+    }
+  }, []);
 
   async function handleLogin(e: any) {
     e.preventDefault();
@@ -183,7 +213,7 @@ const Auth = (props: any) => {
       {loggedIn ? (
         <div className="flex flex-col">
           <div className="flex flex-row justify-evenly w-full">
-            <p>Welcome, {profile?.name}!</p>
+            <p className="mt-2">Welcome, {profile?.name}!</p>
             <button onClick={handleLogout}>Logout</button>
           </div>
           <Tasks />

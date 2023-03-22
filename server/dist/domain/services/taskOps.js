@@ -1,8 +1,6 @@
 export class TaskUseCase {
-    Token;
     TaskRepos;
-    constructor(Token, TaskRepos) {
-        this.Token = Token;
+    constructor(TaskRepos) {
         this.TaskRepos = TaskRepos;
     }
     /**
@@ -17,5 +15,12 @@ export class TaskUseCase {
      */
     async delTask(id) {
         await this.TaskRepos.delete(id);
+    }
+    /**
+     * createTask
+     */
+    async createTask(userId, message) {
+        const task = await this.TaskRepos.create({ userId, message });
+        return task;
     }
 }
