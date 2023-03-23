@@ -31,31 +31,25 @@ export class AuthUseCase {
     async loginUser(email, password) {
         console.log(email);
         console.log(password);
-        try {
-            /**
-             * loginUser
-             */
-            if (!email || !password) {
-                throw Error("All fields must be filled");
-            }
-            const userDTO = await this.UserRepos.findByEmail(email);
-            if (!userDTO) {
-                throw Error("Incorrect email");
-            }
-            const tokenDTO = this.tokenAdapter.createToken(userDTO.id, null);
-            // compare hash
-            const compareBool = await this.Encrypt.compareEncryptionOperation(password, userDTO.password?.toString());
-            // console.log(compareBool);
-            if (!compareBool) {
-                throw Error("Incorrect password");
-            }
-            // res.status(200).json({ email, token: tokenDTO.token});
-            return { user: userDTO, token: tokenDTO.token };
+        /**
+         * loginUser
+         */
+        if (!email || !password) {
+            throw Error("All fields must be filled");
         }
-        catch (error) {
-            console.log(`Error: ${error}`);
-            return false;
+        const userDTO = await this.UserRepos.findByEmail(email);
+        if (!userDTO) {
+            throw Error("Incorrect email");
         }
+        const tokenDTO = this.tokenAdapter.createToken(userDTO.id, null);
+        // compare hash
+        const compareBool = await this.Encrypt.compareEncryptionOperation(password, userDTO.password?.toString());
+        // console.log(compareBool);
+        if (!compareBool) {
+            throw Error("Incorrect password");
+        }
+        // res.status(200).json({ email, token: tokenDTO.token});
+        return { user: userDTO, token: tokenDTO.token };
     }
     /**
      * delUser

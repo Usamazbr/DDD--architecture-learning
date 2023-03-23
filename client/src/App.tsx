@@ -196,9 +196,21 @@ const Auth = (props: any) => {
       } else {
         alert(data.message);
       }
-    } catch (e) {
-      console.error(e);
-      // setErr(e)
+    } catch (error) {
+      console.log(error);
+      // console.error(error);
+      // setErr(error)
+      // if (error.response) {
+      //   console.log(error.response.data);
+      //   console.log(error.response.status);
+      //   console.log(error.response.headers);
+      // } else if (error.request) {
+      //   console.log(error.request);
+      // } else {
+      //   console.log("Error", error.message);
+      // }
+      // console.log("Error", error.message);
+      // console.log(error);
       // alert("An error occurred. Please try again.");
     }
   }

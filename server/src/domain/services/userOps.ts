@@ -40,34 +40,29 @@ export class AuthUseCase<T> {
     console.log(email);
     console.log(password);
 
-    try {
-      /**
-       * loginUser
-       */
-      if (!email || !password) {
-        throw Error("All fields must be filled");
-      }
-      const userDTO = await (<Promise<User>>this.UserRepos.findByEmail(email));
-      if (!userDTO) {
-        throw Error("Incorrect email");
-      }
-      const tokenDTO = this.tokenAdapter.createToken(<string>userDTO.id, null);
-      // compare hash
-      const compareBool: boolean = await this.Encrypt.compareEncryptionOperation(
-        password,
-        <string>userDTO.password?.toString()
-      );
-      // console.log(compareBool);
-      if (!compareBool) {
-        throw Error("Incorrect password");
-      }
-
-      // res.status(200).json({ email, token: tokenDTO.token});
-      return {user: userDTO, token: <string>tokenDTO.token};
-    } catch (error: any) {
-      console.log(`Error: ${error}`);
-      return false;
+    /**
+     * loginUser
+     */
+    if (!email || !password) {
+      throw Error("All fields must be filled");
     }
+    const userDTO = await (<Promise<User>>this.UserRepos.findByEmail(email));
+    if (!userDTO) {
+      throw Error("Incorrect email");
+    }
+    const tokenDTO = this.tokenAdapter.createToken(<string>userDTO.id, null);
+    // compare hash
+    const compareBool: boolean = await this.Encrypt.compareEncryptionOperation(
+      password,
+      <string>userDTO.password?.toString()
+    );
+    // console.log(compareBool);
+    if (!compareBool) {
+      throw Error("Incorrect password");
+    }
+
+    // res.status(200).json({ email, token: tokenDTO.token});
+    return {user: userDTO, token: <string>tokenDTO.token};
   }
 
   /**

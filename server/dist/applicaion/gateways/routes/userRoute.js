@@ -16,8 +16,9 @@ export class userRouteAdapter {
                 res.status(200).send(response);
             }
             catch (error) {
+                console.log("\x1b[33madminControl line 24:\x1b[0m ");
                 console.log(error);
-                res.status(404).json({ error: error });
+                res.status(404).json({ error });
             }
         });
     }
