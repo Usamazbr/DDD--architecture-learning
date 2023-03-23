@@ -11,10 +11,11 @@ export class taskRouteAdapter {
     taskCreationRoute(useCase) {
         this.app.use(crudLogs);
         // this.app.use(tasksFilter);
-        this.app.post("/api/tasks/", async ({ body, user }, res) => {
+        this.app.post("/api/tasks", async ({ body, user }, res) => {
+            console.log("\x1b[33mline 24:\x1b[0m ");
             console.log(body, user);
             try {
-                // const response = await useCase.createTask(``, body);
+                const response = await useCase.createTask(user, body.body);
                 res.status(200).send(`response`);
             }
             catch (error) {
@@ -29,9 +30,9 @@ export class taskRouteAdapter {
     taskFetchAllRoute(useCase) {
         this.app.use(crudLogs);
         // this.app.use(tasksFilter);
-        this.app.get("/api/tasks/", async ({ body }, res) => {
+        this.app.get("/api/tasks", async ({ user }, res) => {
             try {
-                const response = await useCase.fetchAllTasks(body.userId);
+                const response = await useCase.fetchAllTasks(user);
                 res.status(200).send(response);
             }
             catch (error) {

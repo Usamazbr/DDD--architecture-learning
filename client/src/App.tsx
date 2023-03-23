@@ -98,7 +98,7 @@ interface Task {
 
 const Tasks = () => {
   const apiurl = useRef<string>(`http://localhost:8082`);
-  const token = useRef<string>(localStorage.getItem("token"));
+  const token = useRef<string>(JSON.parse(localStorage.getItem("token") as string));
   const [tasks, setTasks] = useState<Task[]>();
   const [newTask, setNewTask] = useState(``);
 
@@ -115,14 +115,16 @@ const Tasks = () => {
   const handleTaskSubmit = (e: any) => {
     e.preventDefault();
     const config = {headers: {Authorization: `Bearer ${token.current}`}};
-    const body = newTask;
-    axios.post(`${apiurl.current}/api/tasks`, body, config).then((response) => {
+    // const body = newTask;
+    axios.post(`${apiurl.current}/api/tasks`, {body: newTask}, config).then((response) => {
       if (response.status === 200) {
         console.log(response.data);
         setTasks((prev) => [response.data, ...[prev]]);
       }
     });
   };
+
+  const delTask = (e: any) => {};
 
   return (
     <div className="flex flex-col space-y-2 p-1">
@@ -135,9 +137,14 @@ const Tasks = () => {
           value={newTask}
         />
       </form>
-      <div className={`flex flex-col ${tasks && `border rounded-lg`}`}>
-        {tasks?.map((task) => (
-          <h2 key={task.id}>{task.message}</h2>
+      <div className={`flex flex-col p-1 space-y-1 ${tasks && `border rounded-lg`}`}>
+        {tasks?.map(({id, message}) => (
+          <div key={id} className="flex flex-row justify-between">
+            <h2 className="my-auto">{message}</h2>
+            <button className="my-auto h-8 text-xs" onClick={() => delTask(id)}>
+              del
+            </button>
+          </div>
         ))}
       </div>
     </div>

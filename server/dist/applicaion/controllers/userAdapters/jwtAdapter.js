@@ -17,8 +17,6 @@ class JwtToken {
      * tokenGenerator
      */
     tokenGenerator(_id, time) {
-        console.log("\x1b[33mline 21:\x1b[0m ");
-        console.log(this.secret);
         const expiryTime = new Date();
         if (time === null) {
             console.log(`time is 1 day (default)`);
@@ -32,18 +30,15 @@ class JwtToken {
      * tokenVerifier
      */
     tokenVerifier = (token) => {
-        console.log("\x1b[33mline 38:\x1b[0m ");
-        console.log(this.secret);
-        console.log(token);
         try {
-            const _id = jwt.verify(token, this.secret);
-            console.log(_id);
-            // return _id
+            const { _id } = jwt.verify(token, this.secret);
+            return _id;
             // req.user = await User.findOne({ _id });
         }
         catch (error) {
+            console.log("\x1b[33mline 41:\x1b[0m ");
             console.log(error);
-            // return `${error}: Unauthorized`
+            return `${error}: Unauthorized`;
             // res.status(401).json({error: "Unauthorized"});
         }
     };

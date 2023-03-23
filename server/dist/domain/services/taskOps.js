@@ -20,6 +20,9 @@ export class TaskUseCase {
      * createTask
      */
     async createTask(userId, message) {
+        if (!message) {
+            throw Error("Message must be something!");
+        }
         const task = await this.TaskRepos.create({ userId, message });
         return task;
     }

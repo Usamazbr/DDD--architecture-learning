@@ -13,10 +13,9 @@ export class TokenFactory {
         return tokenAdapter.tokenGenerator(id, time);
     }
     verifyToken(token) {
-        console.log(token);
         // Call the factory method to create a Product object.
         const tokenAdapter = this.tokenMethod();
         // Now, use the product.
-        tokenAdapter.tokenVerifier(token);
+        return tokenAdapter.tokenVerifier(token);
     }
 }

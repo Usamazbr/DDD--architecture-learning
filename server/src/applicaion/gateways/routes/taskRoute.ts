@@ -17,10 +17,11 @@ export class taskRouteAdapter<T> {
   public taskCreationRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
     // this.app.use(tasksFilter);
-    this.app.post("/api/tasks/", async ({body, user}, res) => {
+    this.app.post("/api/tasks", async ({body, user}, res) => {
+      console.log("\x1b[33mline 24:\x1b[0m ");
       console.log(body, user);
       try {
-        // const response = await useCase.createTask(``, body);
+        const response = await useCase.createTask(<string>user, body.body);
         res.status(200).send(`response`);
       } catch (error) {
         console.log(error);
@@ -35,9 +36,9 @@ export class taskRouteAdapter<T> {
   public taskFetchAllRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
     // this.app.use(tasksFilter);
-    this.app.get("/api/tasks/", async ({body}, res) => {
+    this.app.get("/api/tasks", async ({user}, res) => {
       try {
-        const response = await useCase.fetchAllTasks(body.userId);
+        const response = await useCase.fetchAllTasks(<string>user);
         res.status(200).send(response);
       } catch (error) {
         console.log(error);

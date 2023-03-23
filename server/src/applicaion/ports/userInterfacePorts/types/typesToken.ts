@@ -8,5 +8,5 @@ export interface tokenDTO {
 export interface Token {
   secretOut(): string;
   tokenGenerator(_id: string, time: string): tokenDTO;
-  tokenVerifier(token: string): void;
+  tokenVerifier(token: string): string;
 }

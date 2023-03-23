@@ -21,11 +21,10 @@ export abstract class TokenFactory {
     return tokenAdapter.tokenGenerator(id, <string>time);
   }
 
-  public verifyToken(token: string): void {
-    console.log(token);
+  public verifyToken(token: string): string {
     // Call the factory method to create a Product object.
     const tokenAdapter = this.tokenMethod();
     // Now, use the product.
-    tokenAdapter.tokenVerifier(token);
+    return tokenAdapter.tokenVerifier(token);
   }
 }

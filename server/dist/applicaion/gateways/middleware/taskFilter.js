@@ -8,8 +8,8 @@ export class TaskFilter {
      * filterMethod
      */
     filterMethod({ headers }, res, next) {
-        console.log("\x1b[33mline 26:\x1b[0m ");
-        console.log(this);
+        // console.log("\x1b[33mline 26:\x1b[0m ");
+        // console.log(this);
         console.log(`filterMethod`);
         const { authorization } = headers;
         if (!authorization) {
@@ -18,8 +18,9 @@ export class TaskFilter {
         const token = authorization.split(" ")[1];
         console.log("\x1b[33mline 24:\x1b[0m ");
         console.log(token);
+        this.tokenAdapter.secretKey();
         try {
-            this.tokenAdapter.verifyToken(token);
+            // this.tokenAdapter.verifyToken(token);
             next();
         }
         catch (error) {
