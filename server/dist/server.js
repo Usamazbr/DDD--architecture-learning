@@ -3,7 +3,7 @@ import cors from "cors";
 import { fetchConfig, PORT_T } from "./framework/config/config.js";
 import App from "./interface/frontendController/App.js";
 import { TestApp } from "./interface/frontendController/testApp.js";
-// import {main} from "./infrastructure/databases/prisma/testPrismaRepos.js";
+// import program from "commander";
 const expApp = express();
 //middlewares
 expApp.use(express.json());

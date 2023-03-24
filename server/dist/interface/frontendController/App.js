@@ -8,14 +8,12 @@ class App {
     constructor(app, config) {
         this.app = app;
         this.config = config;
-        // this.connectionDb = new ConnecPrisma(<string>this.config.db_connect);
         this.userAccess = new userController(this.app, this.config);
         this.taskAccess = new taskController(this.app, this.config);
     }
     //TODO user
     async start() {
         try {
-            // const repos = await this.connectionDb.connectionMethod();
             await this.userAccess.authMethod();
             await this.taskAccess.taskMethod();
             this.app.listen(this.config.port, () => {
