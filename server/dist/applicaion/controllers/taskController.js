@@ -21,7 +21,7 @@ export class taskController {
         this.taskUseCase = new TaskUseCase(this.taskRepos);
     }
     /**
-     * adapterMethod
+     * allRoutesInvocation
      */
     async taskMethod() {
         //middleware

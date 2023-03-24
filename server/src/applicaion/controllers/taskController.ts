@@ -26,7 +26,7 @@ export class taskController {
   }
 
   /**
-   * adapterMethod
+   * allRoutesInvocation
    */
   public async taskMethod() {
     //middleware
