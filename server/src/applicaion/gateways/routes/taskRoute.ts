@@ -1,14 +1,12 @@
 import {Application} from "express";
 import {TaskUseCase} from "../../../domain/services/taskOps.js";
 import {crudLogs} from "../log/crudLogs.js";
-import {tasksFilter} from "../middleware/taskFilter.js";
 
 export class taskRouteAdapter<T> {
   private app: Application;
 
   constructor(app: Application) {
     this.app = app;
-    //middleware
   }
 
   /**
@@ -16,7 +14,6 @@ export class taskRouteAdapter<T> {
    */
   public taskCreationRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
-    // this.app.use(tasksFilter);
     this.app.post("/api/tasks", async ({body, user}, res) => {
       console.log("\x1b[33mline 24:\x1b[0m ");
       console.log(body, user);
@@ -36,7 +33,6 @@ export class taskRouteAdapter<T> {
    */
   public taskFetchAllRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
-    // this.app.use(tasksFilter);
     this.app.get("/api/tasks", async ({user}, res) => {
       try {
         const response = await useCase.fetchAllTasks(<string>user);
@@ -52,7 +48,6 @@ export class taskRouteAdapter<T> {
    */
   public delTaskRoute(useCase: TaskUseCase<T>) {
     this.app.use(crudLogs);
-    // this.app.use(tasksFilter);
     this.app.delete(`/api/tasks/:taskId`, async ({params}, res) => {
       try {
         const response = await useCase.delTask(params.taskId);
