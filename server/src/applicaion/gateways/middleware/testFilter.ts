@@ -7,35 +7,33 @@ import {JwtAdapter} from "../../controllers/userAdapters/jwtAdapter.js";
 import {TokenFactory} from "../../ports/userInterfacePorts/tokenPort.js";
 
 export class TaskFilter {
-  private tokenAdapter: TokenFactory;
   //   private header: any;
-  constructor(private secret: string) {
-    this.tokenAdapter = new JwtAdapter(this.secret);
-  }
+  constructor(private tokenAdapter: TokenFactory) {}
 
   /**
    * filterMethod
    */
-  public filterMethod = (req: any, res: any, next: any) => {
+  public filterMethod({headers}: any, res: any, next: any): void {
     // console.log("\x1b[33mline 26:\x1b[0m ");
-    // console.log(body);
-    // const tokenAdapter1 = new JwtAdapter(<string>process.env.SECRET);
+    // console.log(this);
     console.log(`filterMethod`);
-    const {authorization} = req.headers;
+    const {authorization} = headers;
     if (!authorization) {
       return res.status(401).json({error: "Token required"});
     }
     const token: string = authorization.split(" ")[1];
-    // this.tokenAdapter.secretKey();
+    console.log("\x1b[33mline 24:\x1b[0m ");
+    console.log(token);
+    this.tokenAdapter.secretKey();
     try {
-      req.user = this.tokenAdapter.verifyToken(token);
+      // this.tokenAdapter.verifyToken(token);
 
       next();
     } catch (error) {
       console.log(error);
       res.status(401).json({error: "Unauthorized"});
     }
-  };
+  }
 
   /**
    * bsmethod

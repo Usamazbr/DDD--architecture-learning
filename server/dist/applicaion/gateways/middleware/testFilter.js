@@ -5,36 +5,35 @@
 // import {Config} from "../../../types/configtypes.js";
 import { JwtAdapter } from "../../controllers/userAdapters/jwtAdapter.js";
 export class TaskFilter {
-    secret;
     tokenAdapter;
     //   private header: any;
-    constructor(secret) {
-        this.secret = secret;
-        this.tokenAdapter = new JwtAdapter(this.secret);
+    constructor(tokenAdapter) {
+        this.tokenAdapter = tokenAdapter;
     }
     /**
      * filterMethod
      */
-    filterMethod = (req, res, next) => {
+    filterMethod({ headers }, res, next) {
         // console.log("\x1b[33mline 26:\x1b[0m ");
-        // console.log(body);
-        // const tokenAdapter1 = new JwtAdapter(<string>process.env.SECRET);
+        // console.log(this);
         console.log(`filterMethod`);
-        const { authorization } = req.headers;
+        const { authorization } = headers;
         if (!authorization) {
             return res.status(401).json({ error: "Token required" });
         }
         const token = authorization.split(" ")[1];
-        // this.tokenAdapter.secretKey();
+        console.log("\x1b[33mline 24:\x1b[0m ");
+        console.log(token);
+        this.tokenAdapter.secretKey();
         try {
-            req.user = this.tokenAdapter.verifyToken(token);
+            // this.tokenAdapter.verifyToken(token);
             next();
         }
         catch (error) {
             console.log(error);
             res.status(401).json({ error: "Unauthorized" });
         }
-    };
+    }
     /**
      * bsmethod
      */

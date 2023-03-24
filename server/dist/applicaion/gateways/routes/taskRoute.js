@@ -15,8 +15,9 @@ export class taskRouteAdapter {
             console.log("\x1b[33mline 24:\x1b[0m ");
             console.log(body, user);
             try {
-                const response = await useCase.createTask(user, body.body);
-                res.status(200).send(`response`);
+                const response = await useCase.createTask(user, body.message);
+                console.log(response);
+                res.status(200).send(response);
             }
             catch (error) {
                 console.log(error);

@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from "react";
+import {useState, useRef, useEffect, Key} from "react";
 import axios from "axios";
 
 interface LoginResponse {
@@ -90,6 +90,20 @@ const Signup = () => {
   );
 };
 
+const TaskComponent = ({task: message}: {task: string}) => {
+  const delTask = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+  return (
+    <div className="flex flex-row justify-between">
+      <h2 className="my-auto">{message}</h2>
+      <button className="my-auto h-8 text-xs" onClick={() => delTask}>
+        del
+      </button>
+    </div>
+  );
+};
+
 interface Task {
   id: string;
   message: string;
@@ -112,19 +126,18 @@ const Tasks = () => {
     });
   }, []);
 
-  const handleTaskSubmit = (e: any) => {
+  const handleTaskSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const config = {headers: {Authorization: `Bearer ${token.current}`}};
-    // const body = newTask;
-    axios.post(`${apiurl.current}/api/tasks`, {body: newTask}, config).then((response) => {
+    const body: Omit<Task, `id` | `userId`> = {message: newTask};
+    axios.post(`${apiurl.current}/api/tasks`, body, config).then((response) => {
       if (response.status === 200) {
         console.log(response.data);
-        setTasks((prev) => [response.data, ...[prev]]);
+        setTasks((prev) => [...(prev || []), response.data]);
+        setNewTask(``);
       }
     });
   };
-
-  const delTask = (e: any) => {};
 
   return (
     <div className="flex flex-col space-y-2 p-1">
@@ -132,19 +145,14 @@ const Tasks = () => {
         <button className="px-2">⏎ </button>
         <input
           className="m-1 w-full p-1 px-2 bg-gray-800 rounded-md"
-          // type="password"
+          type="text"
           onChange={(e) => setNewTask(e.target.value)}
           value={newTask}
         />
       </form>
-      <div className={`flex flex-col p-1 space-y-1 ${tasks && `border rounded-lg`}`}>
+      <div className={`flex flex-col p-1 space-y-1 border rounded-lg`}>
         {tasks?.map(({id, message}) => (
-          <div key={id} className="flex flex-row justify-between">
-            <h2 className="my-auto">{message}</h2>
-            <button className="my-auto h-8 text-xs" onClick={() => delTask(id)}>
-              del
-            </button>
-          </div>
+          <TaskComponent key={id} task={message} />
         ))}
       </div>
     </div>
