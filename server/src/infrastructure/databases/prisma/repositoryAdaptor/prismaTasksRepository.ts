@@ -35,8 +35,8 @@ export class PrismaORMTaskRepository implements TaskRepository<Task | null> {
     await this.prisma.task.deleteMany();
   }
 
-  async delete(id: string): Promise<void> {
-    await this.prisma.task.delete({
+  async delete(id: string): Promise<any> {
+    return await this.prisma.task.delete({
       where: {id}
     });
   }

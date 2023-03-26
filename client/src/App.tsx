@@ -90,14 +90,30 @@ const Signup = () => {
   );
 };
 
-const TaskComponent = ({task: message}: {task: string}) => {
-  const delTask = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const TaskComponent = ({task: {id, message}, taskSetter}: {task: {id: string; message: string}; taskSetter: any}) => {
+  const apiurl = useRef<string>(`http://localhost:8082`);
+  const token = useRef<string>(JSON.parse(localStorage.getItem("token") as string));
+  useEffect(() => {
+    // console.log(id, message);
+
+    return () => {};
+  }, []);
+
+  const delTask = async () => {
+    try {
+      const config = {headers: {Authorization: `Bearer ${token.current}`}};
+
+      const {data} = await axios.delete(`${apiurl.current}/api/tasks/${id}`, config);
+      taskSetter(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="flex flex-row justify-between">
       <h2 className="my-auto">{message}</h2>
-      <button className="my-auto h-8 text-xs" onClick={() => delTask}>
+      <button className="my-auto h-8 text-xs" onClick={() => delTask()}>
         del
       </button>
     </div>
@@ -139,6 +155,11 @@ const Tasks = () => {
     });
   };
 
+  const taskSetter = ({id}: any) => {
+    console.log(id);
+    setTasks((prev) => prev?.filter((e) => e.id !== id));
+  };
+
   return (
     <div className="flex flex-col space-y-2 p-1">
       <form onSubmit={handleTaskSubmit} className="flex flex-row-reverse justify-evenly border rounded-lg">
@@ -152,7 +173,7 @@ const Tasks = () => {
       </form>
       <div className={`flex flex-col p-1 space-y-1 border rounded-lg`}>
         {tasks?.map(({id, message}) => (
-          <TaskComponent key={id} task={message} />
+          <TaskComponent key={id} task={{id, message}} taskSetter={taskSetter} />
         ))}
       </div>
     </div>

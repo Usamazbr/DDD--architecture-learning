@@ -16,7 +16,7 @@ testServer.startTest();
 const mainApp = async () => {
     const configuration = await fetchConfig();
     // console.log(configuration);
-    const server2 = new App(expApp, configuration);
-    await server2.start();
+    const server = new App(expApp, configuration);
+    await server.start();
 };
 mainApp().catch((error) => console.log(error.message));

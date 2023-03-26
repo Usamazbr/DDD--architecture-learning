@@ -62,8 +62,11 @@ export class userRouteAdapter {
         this.app.delete(`/api/user/:userId`, async ({ params }, res) => {
             try {
                 const response = await useCase.delUser(params.userId);
+                res.status(200).send(response);
             }
-            catch (error) { }
+            catch (error) {
+                res.status(404).json({ error: error });
+            }
         });
     }
 }

@@ -47,8 +47,13 @@ export class taskRouteAdapter {
         this.app.delete(`/api/tasks/:taskId`, async ({ params }, res) => {
             try {
                 const response = await useCase.delTask(params.taskId);
+                console.log(response);
+                res.status(200).send(response);
             }
-            catch (error) { }
+            catch (error) {
+                console.log(error);
+                res.status(404).json({ error: error });
+            }
         });
     }
 }

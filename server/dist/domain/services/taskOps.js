@@ -14,7 +14,7 @@ export class TaskUseCase {
      * delUser
      */
     async delTask(id) {
-        await this.TaskRepos.delete(id);
+        return await this.TaskRepos.delete(id);
     }
     /**
      * createTask

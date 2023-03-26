@@ -29,7 +29,7 @@ export class PrismaORMTaskRepository {
         await this.prisma.task.deleteMany();
     }
     async delete(id) {
-        await this.prisma.task.delete({
+        return await this.prisma.task.delete({
             where: { id }
         });
     }
