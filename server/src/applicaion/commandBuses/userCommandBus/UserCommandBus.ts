@@ -1,0 +1,19 @@
+import {ICommand, ICommandHandler} from "./types/commandType.js";
+
+export class CommandBus {
+  private readonly handlers: Map<string, ICommandHandler<ICommand>> = new Map();
+
+  public registerHandler<T extends ICommand>(commandName: string, handler: ICommandHandler<T>): void {
+    this.handlers.set(commandName, handler);
+  }
+
+  public async execute(command: ICommand): Promise<void> {
+    const handler = this.handlers.get(command.constructor.name);
+
+    if (!handler) {
+      throw new Error(`No handler registered for command ${command.constructor.name}`);
+    }
+
+    await handler.handle(command);
+  }
+}
