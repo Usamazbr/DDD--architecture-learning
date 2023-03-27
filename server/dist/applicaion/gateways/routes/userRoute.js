@@ -1,3 +1,5 @@
+import { CreateAccountCommand } from "../../command buses/userCommandBus/commands/CreateUserCommand.js";
+import { userCommandBus } from "../../command buses/userCommandBus/UserCommandBus.js";
 import { crudLogs } from "../log/crudLogs.js";
 export class userRouteAdapter {
     app;
@@ -9,6 +11,7 @@ export class userRouteAdapter {
         this.app.post("/api/user/login", async ({ body: { email, password } }, res) => {
             // console.log(email, password);
             try {
+                const response1 = await userCommandBus.handle(new CreateAccountCommand(email, password));
                 const response = await useCase.loginUser(email, password);
                 // console.log("\x1b[33mline 19:\x1b[0m ");
                 // console.log(response);

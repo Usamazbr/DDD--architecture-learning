@@ -1,4 +1,3 @@
-// import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import {TokenFactory} from "../../ports/userInterfacePorts/tokenPort.js";
 import {Token} from "../../ports/userInterfacePorts/types/typesToken.js";
