@@ -1,13 +1,8 @@
 import {EncryptFactory} from "../../applicaion/ports/userInterfacePorts/encryptionPort.js";
 import {TokenFactory} from "../../applicaion/ports/userInterfacePorts/tokenPort.js";
-// import {UserEntity} from "../entities/User.js";
 import {UserRepository} from "../repos/userRespository/userRepos.js";
 import casual from "casual";
 import {User} from "../entities/types/typesUser.js";
-// interface bodyType {
-//   email: string;
-//   password: string;
-// }
 
 export class AuthUseCase<T> {
   constructor(

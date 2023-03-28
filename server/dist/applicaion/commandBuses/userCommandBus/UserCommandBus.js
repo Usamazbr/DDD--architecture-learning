@@ -1,4 +1,4 @@
-export class CommandBus {
+export class UserCommandBus {
     handlers = new Map();
     registerHandler(commandName, handler) {
         this.handlers.set(commandName, handler);
@@ -8,6 +8,6 @@ export class CommandBus {
         if (!handler) {
             throw new Error(`No handler registered for command ${command.constructor.name}`);
         }
-        await handler.handle(command);
+        return await handler.handle(command);
     }
 }

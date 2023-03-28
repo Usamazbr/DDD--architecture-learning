@@ -1,4 +1,4 @@
-export class LogInUserCommand {
+export class DeleteUserCommand {
     userDTO;
     constructor(userDTO) {
         this.userDTO = userDTO;

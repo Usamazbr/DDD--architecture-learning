@@ -1,11 +1,43 @@
 export class CreateUserCommandHandler {
-    userRepository;
-    constructor(userRepository) {
-        this.userRepository = userRepository;
+    useCase;
+    constructor(useCase) {
+        this.useCase = useCase;
     }
     async handle(command) {
-        const { name, email, password } = command.userData;
-        //   const user = new UserEntity( name, email, password);
-        await this.userRepository.create({ name, email, password });
+        const { name, email } = command.userDTO;
+        //Further manipulations can be performed here
+        return await this.useCase.signupUser(name, email);
+    }
+}
+export class LoginUserCommandHandler {
+    useCase;
+    constructor(useCase) {
+        this.useCase = useCase;
+    }
+    async handle(command) {
+        const { password, email } = command.userDTO;
+        //Further manipulations can be performed here
+        return await this.useCase.loginUser(email, password);
+    }
+}
+export class DeleteUserCommandHandler {
+    useCase;
+    constructor(useCase) {
+        this.useCase = useCase;
+    }
+    async handle(command) {
+        const { userId } = command.userDTO;
+        //Further manipulations can be performed here
+        return await this.useCase.delUser(userId);
+    }
+}
+export class AllUserCommandHandler {
+    useCase;
+    constructor(useCase) {
+        this.useCase = useCase;
+    }
+    async handle(_) {
+        //Further manipulations can be performed here
+        return await this.useCase.fetchAllUsers();
     }
 }

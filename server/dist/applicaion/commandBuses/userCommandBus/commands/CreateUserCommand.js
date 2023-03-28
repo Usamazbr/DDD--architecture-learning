@@ -1,7 +1,7 @@
 export class CreateUserCommand {
-    userData;
-    constructor(userData) {
-        this.userData = userData;
+    userDTO;
+    constructor(userDTO) {
+        this.userDTO = userDTO;
     }
     async execute() {
         // command handler will handle creating the user from the raw data
