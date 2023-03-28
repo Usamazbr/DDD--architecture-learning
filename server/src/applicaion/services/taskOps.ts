@@ -1,4 +1,4 @@
-import {TaskRepository} from "../repos/taskRepository/taskRepos.js";
+import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
 
 export class TaskUseCase<T> {
   constructor(private TaskRepos: TaskRepository<T>) {}

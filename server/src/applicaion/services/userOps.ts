@@ -1,8 +1,8 @@
-import {EncryptFactory} from "../../applicaion/ports/userInterfacePorts/encryptionPort.js";
-import {TokenFactory} from "../../applicaion/ports/userInterfacePorts/tokenPort.js";
-import {UserRepository} from "../repos/userRespository/userRepos.js";
+import {EncryptFactory} from "../ports/userInterfacePorts/encryptionPort.js";
+import {TokenFactory} from "../ports/userInterfacePorts/tokenPort.js";
+import {UserRepository} from "../../domain/repos/userRespository/userRepos.js";
 import casual from "casual";
-import {User} from "../entities/types/typesUser.js";
+import {User} from "../../domain/entities/types/typesUser.js";
 
 export class AuthUseCase<T> {
   constructor(

@@ -1,4 +1,4 @@
-import {AuthUseCase} from "../../../../domain/services/userOps.js";
+import {AuthUseCase} from "../../../services/userOps.js";
 import {CreateUserCommand} from "../commands/CreateUserCommand.js";
 import {DeleteUserCommand} from "../commands/DeleteUserCommand.js";
 import {LogInUserCommand} from "../commands/LogInUserCommand.js";

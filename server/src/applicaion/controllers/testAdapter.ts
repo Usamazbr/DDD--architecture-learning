@@ -1,6 +1,6 @@
 import {Application} from "express";
 import {ExpressAdapter} from "../ports/port.js";
-import {UseCase} from "../../domain/services/useCase.js";
+import {UseCase} from "../services/useCase.js";
 
 export class testAdapter {
   private app: Application;

@@ -1,7 +1,7 @@
 import {Application} from "express";
 
 import {taskRouteAdapter} from "../gateways/routes/taskRoute.js";
-import {TaskUseCase} from "../../domain/services/taskOps.js";
+import {TaskUseCase} from "../services/taskOps.js";
 
 import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
 import {PrismaClient, Task} from "@prisma/client";

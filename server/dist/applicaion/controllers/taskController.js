@@ -1,5 +1,5 @@
 import { taskRouteAdapter } from "../gateways/routes/taskRoute.js";
-import { TaskUseCase } from "../../domain/services/taskOps.js";
+import { TaskUseCase } from "../services/taskOps.js";
 import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import { PrismaORMTaskRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
 import { TaskFilter } from "../gateways/middleware/taskFilter.js";
