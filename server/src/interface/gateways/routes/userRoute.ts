@@ -1,5 +1,5 @@
 import {Application} from "express";
-import {AuthUseCase} from "../../services/userOps.js";
+import {AuthUseCase} from "../../../applicaion/services/userOps.js";
 import {crudLogs} from "../log/crudLogs.js";
 
 export class userRouteAdapter<T> {

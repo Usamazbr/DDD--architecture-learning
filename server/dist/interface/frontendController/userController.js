@@ -1,7 +1,7 @@
 import { userRouteAdapter } from "../../interface/gateways/routes/userRoute.js";
 import { AuthUseCase } from "../services/userOps.js";
 // import { UseCase } from "../../domain/services/useCase.js";
-import { BcryptAdapter } from "../../interface/frontendController/authAdapters/bcryptAdapter.js";
+import { BcryptAdapter } from "./authAdapters/bcryptAdapter.js";
 import { JwtAdapter } from "./userAdapters/jwtAdapter.js";
 import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import { PrismaORMUserRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";

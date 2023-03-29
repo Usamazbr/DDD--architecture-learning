@@ -1,5 +1,5 @@
 import {Application} from "express";
-import {TaskUseCase} from "../../services/taskOps.js";
+import {TaskUseCase} from "../../../applicaion/services/taskOps.js";
 import {crudLogs} from "../log/crudLogs.js";
 
 export class taskRouteAdapter<T> {

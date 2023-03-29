@@ -1,7 +1,7 @@
 import {Application} from "express";
-import {taskController} from "../../applicaion/controllers/taskController.js";
-import {userController} from "../../applicaion/controllers/userController.js";
-import {Config} from "../../types/configtypes.js";
+import {Config} from "../../framework/types/configtypes.js";
+import {taskController} from "./controllers/taskController.js";
+import {userController} from "./controllers/userController.js";
 
 class App {
   private userAccess: userController;

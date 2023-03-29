@@ -1,17 +1,17 @@
 import {Application} from "express";
 
-import {userRouteAdapter} from "../gateways/routes/userRoute.js";
-import {AuthUseCase} from "../services/userOps.js";
+import {userRouteAdapter} from "../../gateways/routes/userRoute.js";
 // import { UseCase } from "../../domain/services/useCase.js";
+import {AuthUseCase} from "../../../applicaion/services/userOps.js";
 
-import {BcryptAdapter} from "./userAdapters/bcryptAdapter.js";
-import {JwtAdapter} from "./userAdapters/jwtAdapter.js";
+import {BcryptAdapter} from "../adapters/bcryptAdapter.js";
 
-import {UserRepository} from "../../domain/repos/userRespository/userRepos.js";
+import {UserRepository} from "../../../domain/repos/userRespository/userRepos.js";
 import {PrismaClient, User} from "@prisma/client";
-import {ConnecPrisma} from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
-import {PrismaORMUserRepository} from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
-import {Config} from "../../types/configtypes.js";
+import {ConnecPrisma} from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import {PrismaORMUserRepository} from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
+import {Config} from "../../../framework/types/configtypes.js";
+import {JwtAdapter} from "../adapters/jwtAdapter.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 
