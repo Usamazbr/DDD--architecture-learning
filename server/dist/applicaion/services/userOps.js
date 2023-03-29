@@ -1,4 +1,8 @@
 import casual from "casual";
+// interface bodyType {
+//   email: string;
+//   password: string;
+// }
 export class AuthUseCase {
     tokenAdapter;
     Encrypt;

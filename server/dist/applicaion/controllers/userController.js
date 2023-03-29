@@ -1,5 +1,5 @@
 import { userRouteAdapter } from "../gateways/routes/userRoute.js";
-import { AuthUseCase } from "../../domain/services/userOps.js";
+import { AuthUseCase } from "../services/userOps.js";
 // import { UseCase } from "../../domain/services/useCase.js";
 import { BcryptAdapter } from "./userAdapters/bcryptAdapter.js";
 import { JwtAdapter } from "./userAdapters/jwtAdapter.js";
