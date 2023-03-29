@@ -1,35 +1,35 @@
 import { crudLogs } from "../log/crudLogs.js";
 export class userRouteAdapter {
     app;
-    constructor(app) {
+    userInvoker;
+    constructor(app, userInvoker) {
         this.app = app;
+        this.userInvoker = userInvoker;
     }
-    userLoginRoute(useCase) {
+    userLoginRoute() {
         this.app.use(crudLogs);
         this.app.post("/api/user/login", async ({ body: { email, password } }, res) => {
-            // console.log(email, password);
             try {
-                const response = await useCase.loginUser(email, password);
+                const response = await this.userInvoker.execute(new LogInUserCommand({ email, password }));
                 // console.log("\x1b[33mline 19:\x1b[0m ");
                 // console.log(response);
-                //   json(users);
                 res.status(200).send(response);
             }
             catch (error) {
-                console.log("\x1b[33madminControl line 24:\x1b[0m ");
+                console.log("\x1b[33mError line 22:\x1b[0m ");
                 console.log(error);
                 res.status(404).json({ error });
             }
         });
     }
-    userSignupRoute(useCase) {
+    userSignupRoute() {
         this.app.use(crudLogs);
         this.app.post("/api/user/signup", async ({ body: { name, email } }, res) => {
             console.log(name, email);
             try {
-                const response = await useCase.signupUser(name, email);
+                // // const response1 = await createCommand.handle(new CreateAccountCommand(email, password));
+                const response = await this.userInvoker.execute(new CreateUserCommand({ name, email }));
                 console.log(response);
-                //   json(users);
                 res.status(200).send(response);
             }
             catch (error) {
@@ -41,11 +41,11 @@ export class userRouteAdapter {
     /**
      * userFetchAllRoute
      */
-    userFetchAllRoute(useCase) {
+    userFetchAllRoute() {
         this.app.use(crudLogs);
         this.app.get("/api/users", async (_, res) => {
             try {
-                const response = await useCase.fetchAllUsers();
+                const response = await this.userInvoker.execute(new AllUserCommand());
                 res.status(200).send(response);
             }
             catch (error) {
@@ -57,11 +57,11 @@ export class userRouteAdapter {
     /**
      * delUserRoute
      */
-    delUserRoute(useCase) {
+    delUserRoute() {
         this.app.use(crudLogs);
-        this.app.delete(`/api/user/:userId`, async ({ params }, res) => {
+        this.app.delete(`/api/user/:userId`, async ({ params: { userId } }, res) => {
             try {
-                const response = await useCase.delUser(params.userId);
+                const response = await this.userInvoker.execute(new DeleteUserCommand({ userId }));
                 res.status(200).send(response);
             }
             catch (error) {

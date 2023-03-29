@@ -1,9 +1,6 @@
 import {Application} from "express";
-<<<<<<< HEAD:server/src/interface/gateways/routes/taskRoute.ts
 import {TaskUseCase} from "../../../applicaion/services/taskOps.js";
-=======
-import {TaskUseCase} from "../../services/taskOps.js";
->>>>>>> Phase-4b:server/src/applicaion/gateways/routes/taskRoute.ts
+
 import {crudLogs} from "../log/crudLogs.js";
 
 export class taskRouteAdapter<T> {
