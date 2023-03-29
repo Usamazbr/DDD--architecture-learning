@@ -1,8 +1,8 @@
-import { taskRouteAdapter } from "../../interface/gateways/routes/taskRoute.js";
-import { TaskUseCase } from "../services/taskOps.js";
-import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
-import { PrismaORMTaskRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
-import { TaskFilter } from "../../interface/middleware/taskFilter.js";
+import { TaskUseCase } from "../../../applicaion/services/taskOps.js";
+import { ConnecPrisma } from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import { PrismaORMTaskRepository } from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
+import { taskRouteAdapter } from "../../gateways/routes/taskRoute.js";
+import { TaskFilter } from "../../middleware/taskFilter.js";
 export class taskController {
     app;
     config;

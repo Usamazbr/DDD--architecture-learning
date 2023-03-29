@@ -1,4 +1,4 @@
-import {UseCase} from "../../domain/services/useCase.js";
+import {UseCase} from "../services/useCase.js";
 // import { HelloWorldController } from "../controllers/useController.js";
 import express, {Application} from "express";
 

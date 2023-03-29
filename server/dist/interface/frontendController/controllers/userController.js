@@ -1,10 +1,10 @@
-import { userRouteAdapter } from "../../interface/gateways/routes/userRoute.js";
-import { AuthUseCase } from "../services/userOps.js";
+import { userRouteAdapter } from "../../gateways/routes/userRoute.js";
 // import { UseCase } from "../../domain/services/useCase.js";
-import { BcryptAdapter } from "../../interface/frontendController/authAdapters/bcryptAdapter.js";
-import { JwtAdapter } from "./userAdapters/jwtAdapter.js";
-import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
-import { PrismaORMUserRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
+import { AuthUseCase } from "../../../applicaion/services/userOps.js";
+import { BcryptAdapter } from "../adapters/bcryptAdapter.js";
+import { ConnecPrisma } from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import { PrismaORMUserRepository } from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
+import { JwtAdapter } from "../adapters/jwtAdapter.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 export class userController {
