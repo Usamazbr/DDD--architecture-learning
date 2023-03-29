@@ -1,12 +1,12 @@
-import { userRouteAdapter } from "../gateways/routes/userRoute.js";
-import { AuthUseCase } from "../services/userOps.js";
+import { userRouteAdapter } from "../../gateways/routes/userRoute.js";
+import { AuthUseCase } from "../../../applicaion/services/userOps.js";
 // import { UseCase } from "../../domain/services/useCase.js";
-import { BcryptAdapter } from "../../interface/frontendController/userAdapters/bcryptAdapter.js";
-import { JwtAdapter } from "../../interface/frontendController/userAdapters/jwtAdapter.js";
-import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
-import { PrismaORMUserRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
-import { UserCommandBus } from "../commandBuses/userCommandBus/UserCommandBus.js";
-import { AllUserCommandHandler, CreateUserCommandHandler, DeleteUserCommandHandler, LoginUserCommandHandler } from "../commandBuses/userCommandBus/handler/Handler.js";
+import { BcryptAdapter } from "../userAdapters/bcryptAdapter.js";
+import { JwtAdapter } from "../userAdapters/jwtAdapter.js";
+import { ConnecPrisma } from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import { PrismaORMUserRepository } from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
+import { UserCommandBus } from "../../../applicaion/commandBuses/userCommandBus/UserCommandBus.js";
+import { AllUserCommandHandler, CreateUserCommandHandler, DeleteUserCommandHandler, LoginUserCommandHandler } from "../../../applicaion/commandBuses/userCommandBus/handler/Handler.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 export class userController {

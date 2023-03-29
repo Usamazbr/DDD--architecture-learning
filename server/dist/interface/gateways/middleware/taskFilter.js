@@ -1,4 +1,4 @@
-import { JwtAdapter } from "../../../interface/frontendController/userAdapters/jwtAdapter.js";
+import { JwtAdapter } from "../../frontendController/userAdapters/jwtAdapter.js";
 // User token authentication
 export class TaskFilter {
     secret;

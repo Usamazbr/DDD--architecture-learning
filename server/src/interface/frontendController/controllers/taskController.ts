@@ -1,14 +1,14 @@
 import {Application} from "express";
 
-import {taskRouteAdapter} from "../gateways/routes/taskRoute.js";
-import {TaskUseCase} from "../services/taskOps.js";
+import {taskRouteAdapter} from "../../gateways/routes/taskRoute.js";
+import {TaskUseCase} from "../../../applicaion/services/taskOps.js";
 
-import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
+import {TaskRepository} from "../../../domain/repos/taskRepository/taskRepos.js";
 import {PrismaClient, Task} from "@prisma/client";
-import {ConnecPrisma} from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
-import {PrismaORMTaskRepository} from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
-import {Config} from "../../types/configtypes.js";
-import {TaskFilter} from "../gateways/middleware/taskFilter.js";
+import {ConnecPrisma} from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
+import {PrismaORMTaskRepository} from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
+import {Config} from "../../../framework/types/configtypes.js";
+import {TaskFilter} from "../../gateways/middleware/taskFilter.js";
 
 export class taskController {
   private routeAdapter: taskRouteAdapter<Task>;

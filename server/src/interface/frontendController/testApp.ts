@@ -1,6 +1,6 @@
 import {Application} from "express";
-import {testAdapter} from "../../applicaion/controllers/testAdapter.js";
-import {Config} from "../../types/configtypes.js";
+import {testAdapter} from "./controllers/testAdapter.js";
+import {Config} from "../../framework/types/configtypes.js";
 
 export class TestApp {
   private access: testAdapter;

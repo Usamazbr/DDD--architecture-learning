@@ -1,5 +1,5 @@
-import { taskController } from "../../applicaion/controllers/taskController.js";
-import { userController } from "../../applicaion/controllers/userController.js";
+import { taskController } from "./controllers/taskController.js";
+import { userController } from "./controllers/userController.js";
 class App {
     app;
     config;

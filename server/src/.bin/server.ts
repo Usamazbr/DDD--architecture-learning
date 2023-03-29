@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import {fetchConfig, PORT_T} from "./framework/config/config.js";
+import {fetchConfig, PORT_T} from "../framework/config/config.js";
 
-import App from "./interface/frontendController/App.js";
-import {TestApp} from "./interface/frontendController/testApp.js";
-import {Config} from "./types/configtypes.js";
+import App from "../interface/frontendController/App.js";
+import {TestApp} from "../interface/frontendController/testApp.js";
+import {Config} from "../types/configtypes.js";
 // import program from "commander";
 
 const expApp = express();

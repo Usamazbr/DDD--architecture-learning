@@ -1,9 +1,9 @@
 import {Application} from "express";
-import {AllUserCommand} from "../../commandBuses/userCommandBus/commands/AllUsersCommand.js";
-import {CreateUserCommand} from "../../commandBuses/userCommandBus/commands/CreateUserCommand.js";
-import {DeleteUserCommand} from "../../commandBuses/userCommandBus/commands/DeleteUserCommand.js";
-import {LogInUserCommand} from "../../commandBuses/userCommandBus/commands/LogInUserCommand.js";
-import {UserCommandBus} from "../../commandBuses/userCommandBus/UserCommandBus.js";
+import {AllUserCommand} from "../../../applicaion/commandBuses/userCommandBus/commands/AllUsersCommand.js";
+import {CreateUserCommand} from "../../../applicaion/commandBuses/userCommandBus/commands/CreateUserCommand.js";
+import {DeleteUserCommand} from "../../../applicaion/commandBuses/userCommandBus/commands/DeleteUserCommand.js";
+import {LogInUserCommand} from "../../../applicaion/commandBuses/userCommandBus/commands/LogInUserCommand.js";
+import {UserCommandBus} from "../../../applicaion/commandBuses/userCommandBus/UserCommandBus.js";
 import {crudLogs} from "../log/crudLogs.js";
 
 export class userRouteAdapter<T> {

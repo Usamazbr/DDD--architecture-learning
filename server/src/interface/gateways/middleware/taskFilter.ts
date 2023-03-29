@@ -1,5 +1,5 @@
-import {JwtAdapter} from "../../controllers/userAdapters/jwtAdapter.js";
-import {TokenFactory} from "../../ports/userInterfacePorts/tokenPort.js";
+import {JwtAdapter} from "../../frontendController/userAdapters/jwtAdapter.js";
+import {TokenFactory} from "../../../applicaion/ports/userInterfacePorts/tokenPort.js";
 
 // User token authentication
 export class TaskFilter {
