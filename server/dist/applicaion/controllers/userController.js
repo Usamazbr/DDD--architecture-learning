@@ -1,10 +1,16 @@
+<<<<<<< HEAD
 import { userRouteAdapter } from "../../interface/gateways/routes/userRoute.js";
+=======
+import { userRouteAdapter } from "../gateways/routes/userRoute.js";
+>>>>>>> Phase-4b
 import { AuthUseCase } from "../services/userOps.js";
 // import { UseCase } from "../../domain/services/useCase.js";
 import { BcryptAdapter } from "../../interface/frontendController/authAdapters/bcryptAdapter.js";
 import { JwtAdapter } from "./userAdapters/jwtAdapter.js";
 import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import { PrismaORMUserRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
+import { UserCommandBus } from "../commandBuses/userCommandBus/UserCommandBus.js";
+import { AllUserCommandHandler, CreateUserCommandHandler, DeleteUserCommandHandler, LoginUserCommandHandler } from "../commandBuses/userCommandBus/handler/Handler.js";
 // import {ConnectTypeORM} from "../../infrastructure/databases/typeORM/connect/typeORMConnect.js";
 // import {ConnectMongodb} from "../../infrastructure/databases/mongoose/connect/mongodbConnect.js";
 export class userController {
@@ -14,12 +20,14 @@ export class userController {
     userAuth;
     userRepos;
     connectionDb;
+    userCommandBus;
     // private tokenAdapter: JwtAdapter;
     constructor(app, config) {
         this.app = app;
         this.config = config;
         this.connectionDb = new ConnecPrisma(this.config.db_connect);
-        this.adapter = new userRouteAdapter(this.app);
+        this.userCommandBus = new UserCommandBus();
+        this.adapter = new userRouteAdapter(this.app, this.userCommandBus);
         this.userRepos = new PrismaORMUserRepository(this.connectionDb.connectionMethod());
         // this.connectionDb.connectionMethod();
         // this.tokenAdapter = new JwtAdapter(<string>config.secret);
@@ -29,9 +37,13 @@ export class userController {
      * adapterMethod
      */
     async authMethod() {
-        this.adapter.userFetchAllRoute(this.userAuth);
-        this.adapter.userLoginRoute(this.userAuth);
-        this.adapter.userSignupRoute(this.userAuth);
-        this.adapter.delUserRoute(this.userAuth);
+        this.userCommandBus.registerHandler(`AllUserCommand`, new AllUserCommandHandler(this.userAuth));
+        this.userCommandBus.registerHandler(`LogInUserCommand`, new LoginUserCommandHandler(this.userAuth));
+        this.userCommandBus.registerHandler(`CreateUserCommand`, new CreateUserCommandHandler(this.userAuth));
+        this.userCommandBus.registerHandler(`DeleteUserCommand`, new DeleteUserCommandHandler(this.userAuth));
+        this.adapter.userFetchAllRoute();
+        this.adapter.userLoginRoute();
+        this.adapter.userSignupRoute();
+        this.adapter.delUserRoute();
     }
 }

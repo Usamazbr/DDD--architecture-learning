@@ -1,40 +1,42 @@
 import {Application} from "express";
+<<<<<<< HEAD:server/src/interface/gateways/routes/userRoute.ts
 import {AuthUseCase} from "../../../applicaion/services/userOps.js";
+=======
+import {AllUserCommand} from "../../commandBuses/userCommandBus/commands/AllUsersCommand.js";
+import {CreateUserCommand} from "../../commandBuses/userCommandBus/commands/CreateUserCommand.js";
+import {DeleteUserCommand} from "../../commandBuses/userCommandBus/commands/DeleteUserCommand.js";
+import {LogInUserCommand} from "../../commandBuses/userCommandBus/commands/LogInUserCommand.js";
+import {UserCommandBus} from "../../commandBuses/userCommandBus/UserCommandBus.js";
+>>>>>>> Phase-4b:server/src/applicaion/gateways/routes/userRoute.ts
 import {crudLogs} from "../log/crudLogs.js";
 
 export class userRouteAdapter<T> {
-  private app: Application;
+  constructor(private app: Application, private userInvoker: UserCommandBus) {}
 
-  constructor(app: Application) {
-    this.app = app;
-  }
-
-  public userLoginRoute(useCase: AuthUseCase<T>) {
+  public userLoginRoute() {
     this.app.use(crudLogs);
     this.app.post("/api/user/login", async ({body: {email, password}}, res) => {
-      // console.log(email, password);
       try {
-        const response = await useCase.loginUser(email, password);
+        const response = await this.userInvoker.execute(new LogInUserCommand({email, password}));
         // console.log("\x1b[33mline 19:\x1b[0m ");
         // console.log(response);
-        //   json(users);
         res.status(200).send(response);
       } catch (error: any) {
-        console.log("\x1b[33madminControl line 24:\x1b[0m ");
+        console.log("\x1b[33mError line 22:\x1b[0m ");
         console.log(error);
         res.status(404).json({error});
       }
     });
   }
 
-  public userSignupRoute(useCase: AuthUseCase<T>) {
+  public userSignupRoute() {
     this.app.use(crudLogs);
     this.app.post("/api/user/signup", async ({body: {name, email}}, res) => {
       console.log(name, email);
       try {
-        const response = await useCase.signupUser(name, email);
+        // // const response1 = await createCommand.handle(new CreateAccountCommand(email, password));
+        const response = await this.userInvoker.execute(new CreateUserCommand({name, email}));
         console.log(response);
-        //   json(users);
         res.status(200).send(response);
       } catch (error) {
         console.log(error);
@@ -46,11 +48,11 @@ export class userRouteAdapter<T> {
   /**
    * userFetchAllRoute
    */
-  public userFetchAllRoute(useCase: AuthUseCase<T>) {
+  public userFetchAllRoute() {
     this.app.use(crudLogs);
     this.app.get("/api/users", async (_, res) => {
       try {
-        const response = await useCase.fetchAllUsers();
+        const response = await this.userInvoker.execute(new AllUserCommand());
         res.status(200).send(response);
       } catch (error) {
         console.log(error);
@@ -61,11 +63,11 @@ export class userRouteAdapter<T> {
   /**
    * delUserRoute
    */
-  public delUserRoute(useCase: AuthUseCase<T>) {
+  public delUserRoute() {
     this.app.use(crudLogs);
-    this.app.delete(`/api/user/:userId`, async ({params}, res) => {
+    this.app.delete(`/api/user/:userId`, async ({params: {userId}}, res) => {
       try {
-        const response = await useCase.delUser(params.userId);
+        const response = await this.userInvoker.execute(new DeleteUserCommand({userId}));
         res.status(200).send(response);
       } catch (error) {
         res.status(404).json({error: error});

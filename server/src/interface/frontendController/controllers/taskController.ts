@@ -1,3 +1,12 @@
+<<<<<<< HEAD:server/src/interface/frontendController/controllers/taskController.ts
+=======
+import {Application} from "express";
+
+import {taskRouteAdapter} from "../gateways/routes/taskRoute.js";
+import {TaskUseCase} from "../services/taskOps.js";
+
+import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
+>>>>>>> Phase-4b:server/src/applicaion/controllers/taskController.ts
 import {PrismaClient, Task} from "@prisma/client";
 import {Application} from "express";
 import {TaskUseCase} from "../../../applicaion/services/taskOps.js";

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { taskRouteAdapter } from "../../interface/gateways/routes/taskRoute.js";
+=======
+import { taskRouteAdapter } from "../gateways/routes/taskRoute.js";
+>>>>>>> Phase-4b
 import { TaskUseCase } from "../services/taskOps.js";
 import { ConnecPrisma } from "../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import { PrismaORMTaskRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";

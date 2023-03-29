@@ -1,5 +1,6 @@
 import {EncryptFactory} from "../ports/userInterfacePorts/encryptionPort.js";
 import {TokenFactory} from "../ports/userInterfacePorts/tokenPort.js";
+<<<<<<< HEAD
 // import {UserEntity} from "../entities/User.js";
 import {UserRepository} from "../../domain/repos/userRespository/userRepos.js";
 import casual from "casual";
@@ -8,6 +9,11 @@ import {User} from "../../domain/entities/types/typesUser.js";
 //   email: string;
 //   password: string;
 // }
+=======
+import {UserRepository} from "../../domain/repos/userRespository/userRepos.js";
+import casual from "casual";
+import {User} from "../../domain/entities/types/typesUser.js";
+>>>>>>> Phase-4b
 
 export class AuthUseCase<T> {
   constructor(
