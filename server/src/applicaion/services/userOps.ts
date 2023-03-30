@@ -7,8 +7,8 @@ import {User} from "../../domain/entities/types/typesUser.js";
 export class AuthUseCase<T> {
   constructor(
     private tokenAdapter: TokenFactory,
-    private Encrypt: EncryptFactory,
-    private UserRepos: UserRepository<T>
+    public Encrypt: EncryptFactory,
+    public UserRepos: UserRepository<T>
   ) {}
 
   public async signupUser(name: string, email: string): Promise<T> {
