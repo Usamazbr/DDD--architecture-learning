@@ -12,7 +12,12 @@ export class AuthUseCase {
         let password = casual.password;
         console.log(password);
         const hadDTO = await this.Encrypt.encryptionOperation(password);
-        password = hadDTO.hashed;
+        if (!hadDTO || !hadDTO.hashed) {
+            throw new Error("Encryption failed");
+        }
+        const { hashed, level } = hadDTO;
+        password = hashed;
+        // password = hadDTO.hashed;
         let user = await this.UserRepos.create({ name, email, password });
         console.log(user);
         return user;
