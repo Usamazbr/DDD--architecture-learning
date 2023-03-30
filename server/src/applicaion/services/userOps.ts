@@ -14,8 +14,8 @@ export class AuthUseCase<T> {
   public async signupUser(name: string, email: string): Promise<T> {
     let password = casual.password;
     console.log(password);
-    const {hashed, level} = await this.Encrypt.encryptionOperation(password);
-    password = hashed;
+    const hadDTO = await this.Encrypt.encryptionOperation(password);
+    password = hadDTO.hashed;
 
     let user = await this.UserRepos.create(<T>{name, email, password});
     console.log(user);

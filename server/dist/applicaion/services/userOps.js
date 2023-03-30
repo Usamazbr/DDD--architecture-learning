@@ -11,8 +11,8 @@ export class AuthUseCase {
     async signupUser(name, email) {
         let password = casual.password;
         console.log(password);
-        const { hashed, level } = await this.Encrypt.encryptionOperation(password);
-        password = hashed;
+        const hadDTO = await this.Encrypt.encryptionOperation(password);
+        password = hadDTO.hashed;
         let user = await this.UserRepos.create({ name, email, password });
         console.log(user);
         return user;
