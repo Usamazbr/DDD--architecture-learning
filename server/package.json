@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "mocha --timeout 3000 'dist/tests/**/*'",
+    "test": "mocha --timeout 3000 'dist/tests/**/*.spec.js'",
     "start:dev": "nodemon"
   },
   "keywords": [],
