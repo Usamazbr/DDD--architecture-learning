@@ -65,34 +65,34 @@ import {BcryptAdapter} from "../interface/frontendController/userAdapters/bcrypt
 //     });
 //   });
 // });
-// describe("AuthUseCase", () => {
-//   describe("signupUser", () => {
-//     beforeEach(() => {});
-//     it("should create a new user with a hashed password", async () => {
-//       const mockUserRepository = sinon.createStubInstance(PrismaORMUserRepository);
-//       // const mockTokenFactory = { createToken: sinon.stub().returns({ token: 'mock_token' }) };
-//       const mockTokenFactory = sinon.createStubInstance(JwtAdapter);
-//       const mockEncryptFactory = sinon.createStubInstance(BcryptAdapter);
-//       // const mockEncryptFactory = { encryptionOperation: sinon.stub().returns({ hashed: 'mock_hash', level: 10 }), compareEncryptionOperation: sinon.stub().returns(true) };
-//       const authUseCase = new AuthUseCase(mockTokenFactory, mockEncryptFactory, mockUserRepository);
+describe.skip("AuthUseCase", () => {
+  describe("signupUser", () => {
+    beforeEach(() => {});
+    it("should create a new user with a hashed password", async () => {
+      const mockUserRepository = sinon.createStubInstance(PrismaORMUserRepository);
+      // const mockTokenFactory = { createToken: sinon.stub().returns({ token: 'mock_token' }) };
+      const mockTokenFactory = sinon.createStubInstance(JwtAdapter);
+      const mockEncryptFactory = sinon.createStubInstance(BcryptAdapter);
+      // const mockEncryptFactory = { encryptionOperation: sinon.stub().returns({ hashed: 'mock_hash', level: 10 }), compareEncryptionOperation: sinon.stub().returns(true) };
+      const authUseCase = new AuthUseCase(mockTokenFactory, mockEncryptFactory, mockUserRepository);
 
-//       const createUserStub = <sinon.SinonStub>mockUserRepository.create;
-//       createUserStub.resolves({id: "mock_id", name: "John Doe", email: "john.doe@example.com", password: "mock_hash"});
+      const createUserStub = <sinon.SinonStub>mockUserRepository.create;
+      createUserStub.resolves({id: "mock_id", name: "John Doe", email: "john.doe@example.com", password: "mock_hash"});
 
-//       const user = await authUseCase.signupUser("John Doe", "john.doe@example.com");
+      const user = await authUseCase.signupUser("John Doe", "john.doe@example.com");
 
-//       expect(createUserStub.calledOnce).to.be.true;
-//       expect(user).to.deep.equal({
-//         id: "mock_id",
-//         name: "John Doe",
-//         email: "john.doe@example.com",
-//         password: "mock_hash"
-//       });
-//       expect(mockEncryptFactory.encryptionOperation.calledOnceWith("mock_password")).to.be.true;
-//       expect(mockTokenFactory.createToken.calledOnceWith("mock_id", null)).to.be.true;
-//     });
-//   });
-// });
+      expect(createUserStub.calledOnce).to.be.true;
+      expect(user).to.deep.equal({
+        id: "mock_id",
+        name: "John Doe",
+        email: "john.doe@example.com",
+        password: "mock_hash"
+      });
+      expect(mockEncryptFactory.encryptionOperation.calledOnceWith("mock_password")).to.be.true;
+      expect(mockTokenFactory.createToken.calledOnceWith("mock_id", null)).to.be.true;
+    });
+  });
+});
 
 describe.skip("fetchAllUsers", () => {
   it("should return all users", async () => {
@@ -110,6 +110,21 @@ describe.skip("fetchAllUsers", () => {
     expectation.exactly(1);
 
     mock.verify();
+
+    // const createUserStub = <sinon.SinonStub>mockUserRepository.callAll;
+
+    // expect(createUserStub).to.be.false;
+  });
+});
+
+describe.skip("fetchAllUsers", () => {
+  it("should return all users", async () => {
+    const mockUserRepository = sinon.createStubInstance(PrismaORMUserRepository);
+    // const mockTokenFactory = { createToken: sinon.stub().returns({ token: 'mock_token' }) };
+    const mockTokenFactory = sinon.createStubInstance(JwtAdapter);
+    const mockEncryptFactory = sinon.createStubInstance(BcryptAdapter);
+    // const mockEncryptFactory = { encryptionOperation: sinon.stub().returns({ hashed: 'mock_hash', level: 10 }), compareEncryptionOperation: sinon.stub().returns(true) };
+    const authUseCase = new AuthUseCase(mockTokenFactory, mockEncryptFactory, mockUserRepository);
 
     // const createUserStub = <sinon.SinonStub>mockUserRepository.callAll;
 
