@@ -5,14 +5,15 @@ import {Task} from "./types/typesTasks.js";
 export class TaskEntity implements Task {
   public readonly id: string;
 
-  constructor(public task: string) {
+  constructor(public message: string, public userId: string) {
     this.id = uuid();
   }
 
   public toDTO(): Task {
     return {
       id: this.id,
-      task: this.task
+      message: this.message,
+      userId: this.userId
     };
   }
 }

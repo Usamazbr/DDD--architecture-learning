@@ -1,8 +1,9 @@
 import { taskRouteAdapter } from "../../gateways/routes/taskRoute.js";
-import { TaskUseCase } from "../../../applicaion/services/taskOps.js";
 import { ConnecPrisma } from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import { PrismaORMTaskRepository } from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
 import { TaskFilter } from "../../gateways/middleware/taskFilter.js";
+import { TaskServices } from "../../../applicaion/services/testTaskOps.js";
+// import {MyTaskManager} from "../../../applicaion/services/test2TaskOps.js";
 export class taskController {
     app;
     config;
@@ -18,7 +19,7 @@ export class taskController {
         this.routeAdapter = new taskRouteAdapter(this.app);
         this.taskRepos = new PrismaORMTaskRepository(this.connectionDb.connectionMethod());
         this.tokenFilter = new TaskFilter(config.secret);
-        this.taskUseCase = new TaskUseCase(this.taskRepos);
+        this.taskUseCase = new TaskServices(this.taskRepos);
     }
     /**
      * allRoutesInvocation

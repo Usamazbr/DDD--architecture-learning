@@ -1,26 +1,27 @@
 import {PrismaClient, Task} from "@prisma/client";
 import {TaskRepository} from "../../../../domain/repos/taskRepository/taskRepos.js";
+// import { Task } from "../../../../domain/entities/types/typesTasks.js";
 
 export class PrismaORMTaskRepository implements TaskRepository<Task | null> {
   constructor(private prisma: PrismaClient) {}
 
   async findById(id: string): Promise<Task | null> {
-    const prismaTask = await this.prisma.task.findUnique({
+    const prismaTask: unknown = await this.prisma.task.findUnique({
       where: {id}
     });
 
-    return prismaTask;
+    return <Task>prismaTask;
   }
 
   async create(task: Task): Promise<Task> {
     console.log(task);
-    const prismaTask = await this.prisma.task.create({
+    const prismaTask: unknown = await this.prisma.task.create({
       data: {
         message: task.message,
         userId: task.userId
       }
     });
-    return prismaTask;
+    return <Task>prismaTask;
   }
 
   async update(task: Task): Promise<void> {}

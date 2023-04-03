@@ -1,16 +1,19 @@
 import { uuid } from "uuidv4";
 // User Entity
 export class TaskEntity {
-    task;
+    message;
+    userId;
     id;
-    constructor(task) {
-        this.task = task;
+    constructor(message, userId) {
+        this.message = message;
+        this.userId = userId;
         this.id = uuid();
     }
     toDTO() {
         return {
             id: this.id,
-            task: this.task
+            message: this.message,
+            userId: this.userId
         };
     }
 }
