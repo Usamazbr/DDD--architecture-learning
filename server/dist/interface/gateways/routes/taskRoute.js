@@ -1,5 +1,4 @@
 import { crudLogs } from "../log/crudLogs.js";
-import { MyTaskObserver } from "../../../applicaion/services/testTaskOps.js";
 // import {MyTaskManager} from "../../../applicaion/services/test2TaskOps.js";
 export class taskRouteAdapter {
     app;
@@ -10,8 +9,6 @@ export class taskRouteAdapter {
      * taskCreationRoute
      */
     taskCreationRoute(useCase) {
-        const observer = new MyTaskObserver();
-        useCase.registerObserver(observer);
         this.app.use(crudLogs);
         this.app.post("/api/tasks", async ({ body, user }, res) => {
             console.log("\x1b[33mline 24:\x1b[0m ");

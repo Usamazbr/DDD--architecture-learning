@@ -2,7 +2,7 @@ import { taskRouteAdapter } from "../../gateways/routes/taskRoute.js";
 import { ConnecPrisma } from "../../../infrastructure/databases/prisma/connect/prismaConnect.js";
 import { PrismaORMTaskRepository } from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
 import { TaskFilter } from "../../gateways/middleware/taskFilter.js";
-import { TaskServices } from "../../../applicaion/services/testTaskOps.js";
+import { MyTaskObserver, TaskServices } from "../../../applicaion/services/taskOps.js";
 // import {MyTaskManager} from "../../../applicaion/services/test2TaskOps.js";
 export class taskController {
     app;
@@ -12,6 +12,7 @@ export class taskController {
     taskRepos;
     connectionDb;
     tokenFilter;
+    observer;
     constructor(app, config) {
         this.app = app;
         this.config = config;
@@ -20,6 +21,7 @@ export class taskController {
         this.taskRepos = new PrismaORMTaskRepository(this.connectionDb.connectionMethod());
         this.tokenFilter = new TaskFilter(config.secret);
         this.taskUseCase = new TaskServices(this.taskRepos);
+        this.observer = new MyTaskObserver();
     }
     /**
      * allRoutesInvocation
@@ -27,6 +29,8 @@ export class taskController {
     async taskMethod() {
         //middleware
         this.app.use(`/api/tasks`, this.tokenFilter.filterMethod);
+        //registering Observer
+        this.taskUseCase.registerObserver(this.observer);
         //other functions
         this.routeAdapter.taskCreationRoute(this.taskUseCase);
         this.routeAdapter.taskFetchAllRoute(this.taskUseCase);

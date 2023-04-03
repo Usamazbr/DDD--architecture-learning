@@ -12,8 +12,8 @@ export class TaskServices {
         if (!message) {
             throw Error("Message must be something!");
         }
-        // this.tasks.push(task);
         const task = await this.TaskRepos.create({ userId, message });
+        this.tasks.push(task);
         this.notifyObservers();
         return task;
     }
@@ -22,6 +22,7 @@ export class TaskServices {
      */
     async delTask(id) {
         const index = this.tasks.findIndex((t) => t.id === id);
+        console.log(index);
         if (index >= 0) {
             this.tasks.splice(index, 1);
             const task = await this.TaskRepos.delete(id);
@@ -33,11 +34,12 @@ export class TaskServices {
     /**
      * fetchAllUsers standalone
      */
-    async fetchAllTasks(id) {
-        const tasks = await this.TaskRepos.callUserTasks(id);
-        console.log(tasks);
+    async fetchAllTasks(userId) {
+        const userTasks = await this.TaskRepos.callUserTasks(userId);
+        // console.log(userTasks);
+        this.tasks = userTasks;
         // this.notifyObservers();
-        return tasks;
+        return userTasks;
     }
     registerObserver(observer) {
         this.observers.push(observer);
@@ -56,7 +58,7 @@ export class TaskServices {
 export class MyTaskObserver {
     onTaskUpdate(subject) {
         if (subject instanceof TaskServices) {
-            console.log(`Tasks updated! ${subject.tasks}`);
+            console.log(`Tasks updated! ${subject.tasks.map(({ message }) => message)}`);
         }
     }
 }

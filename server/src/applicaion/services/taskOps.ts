@@ -1,31 +1,71 @@
+import {Task, TaskManager, TaskObserver} from "../../domain/entities/types/typesTasks.js";
 import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
 
-export class TaskUseCase<T> {
+export class TaskServices<T extends Task> implements TaskManager<T> {
   constructor(private TaskRepos: TaskRepository<T>) {}
+  tasks: T[] = [];
+  observers: TaskObserver<T>[] = [];
 
   /**
-   * fetchAllUsers
+   * createTask
    */
-  public async fetchAllTasks(id: string): Promise<T[]> {
-    const tasks = await this.TaskRepos.callUserTasks(id);
-    return <T[]>tasks;
+  public async createTask(userId: string, message: string) {
+    if (!message) {
+      throw Error("Message must be something!");
+    }
+    const task = await this.TaskRepos.create(<T>{userId, message});
+    this.tasks.push(<T>task);
+    this.notifyObservers();
+    return <T>task;
   }
 
   /**
    * delUser
    */
-  public async delTask(id: string): Promise<any> {
-    return await this.TaskRepos.delete(id);
+  public async delTask(id: string) {
+    const index = this.tasks.findIndex((t: T) => t.id === id);
+    console.log(index);
+    if (index >= 0) {
+      this.tasks.splice(index, 1);
+      const task: T = await this.TaskRepos.delete(id);
+      this.notifyObservers();
+      return <T>task;
+    }
+    return <T>{};
   }
 
   /**
-   * createTask
+   * fetchAllUsers standalone
    */
-  public async createTask(userId: string, message: string): Promise<T> {
-    if (!message) {
-      throw Error("Message must be something!");
+  public async fetchAllTasks(userId: string) {
+    const userTasks = await this.TaskRepos.callUserTasks(userId);
+    // console.log(userTasks);
+    this.tasks = <T[]>userTasks;
+    // this.notifyObservers();
+    return <T[]>userTasks;
+  }
+
+  registerObserver(observer: TaskObserver<T>): void {
+    this.observers.push(observer);
+  }
+
+  unregisterObserver(observer: TaskObserver<T>): void {
+    const index = this.observers.findIndex((o) => o === observer);
+    if (index >= 0) {
+      this.observers.splice(index, 1);
     }
-    const task = await this.TaskRepos.create(<T>{userId, message});
-    return <T>task;
+  }
+
+  notifyObservers(): void {
+    this.observers.forEach((observer) => observer.onTaskUpdate(this));
+  }
+}
+
+// Observer implementation
+export class MyTaskObserver<T> implements TaskObserver<T> {
+  public onTaskUpdate(subject: TaskManager<T>) {
+    if (subject instanceof TaskServices) {
+      console.log(`Tasks updated! ${subject.tasks.map(({message}) => message)}`);
+    }
   }
 }

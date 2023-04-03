@@ -2,8 +2,8 @@ export interface Task {
   id?: string;
   message: string;
   userId?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface TaskManager<T> {

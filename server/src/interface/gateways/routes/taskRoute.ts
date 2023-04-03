@@ -1,9 +1,10 @@
 import {Application} from "express";
 import {crudLogs} from "../log/crudLogs.js";
-import {MyTaskObserver, TaskServices} from "../../../applicaion/services/testTaskOps.js";
+import {TaskServices} from "../../../applicaion/services/taskOps.js";
+import {Task} from "../../../domain/entities/types/typesTasks.js";
 // import {MyTaskManager} from "../../../applicaion/services/test2TaskOps.js";
 
-export class taskRouteAdapter<T> {
+export class taskRouteAdapter {
   private app: Application;
 
   constructor(app: Application) {
@@ -13,9 +14,7 @@ export class taskRouteAdapter<T> {
   /**
    * taskCreationRoute
    */
-  public taskCreationRoute(useCase: TaskServices<T>) {
-    const observer = new MyTaskObserver();
-    useCase.registerObserver(observer);
+  public taskCreationRoute(useCase: TaskServices<Task>) {
     this.app.use(crudLogs);
     this.app.post("/api/tasks", async ({body, user}, res) => {
       console.log("\x1b[33mline 24:\x1b[0m ");
@@ -34,7 +33,7 @@ export class taskRouteAdapter<T> {
   /**
    * taskFetchAllRoute
    */
-  public taskFetchAllRoute(useCase: TaskServices<T>) {
+  public taskFetchAllRoute(useCase: TaskServices<Task>) {
     this.app.use(crudLogs);
     this.app.get("/api/tasks", async ({user}, res) => {
       try {
@@ -49,7 +48,7 @@ export class taskRouteAdapter<T> {
   /**
    * delTaskRoute
    */
-  public delTaskRoute(useCase: TaskServices<T>) {
+  public delTaskRoute(useCase: TaskServices<Task>) {
     this.app.use(crudLogs);
     this.app.delete(`/api/tasks/:taskId`, async ({params}, res) => {
       try {

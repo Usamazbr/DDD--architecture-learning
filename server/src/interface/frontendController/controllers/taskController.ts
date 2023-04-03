@@ -9,15 +9,16 @@ import {ConnecPrisma} from "../../../infrastructure/databases/prisma/connect/pri
 import {PrismaORMTaskRepository} from "../../../infrastructure/databases/prisma/repositoryAdaptor/prismaTasksRepository.js";
 import {Config} from "../../../framework/types/configtypes.js";
 import {TaskFilter} from "../../gateways/middleware/taskFilter.js";
-import {TaskServices} from "../../../applicaion/services/testTaskOps.js";
+import {MyTaskObserver, TaskServices} from "../../../applicaion/services/taskOps.js";
 // import {MyTaskManager} from "../../../applicaion/services/test2TaskOps.js";
 
 export class taskController {
-  private routeAdapter: taskRouteAdapter<Task>;
+  private routeAdapter: taskRouteAdapter;
   private taskUseCase: TaskServices<Task>;
   private taskRepos: PrismaORMTaskRepository;
   private connectionDb: ConnecPrisma;
   private tokenFilter: TaskFilter;
+  private observer: MyTaskObserver<Task>;
 
   constructor(private app: Application, private config: Config) {
     this.connectionDb = new ConnecPrisma(<string>this.config.db_connect);
@@ -25,6 +26,7 @@ export class taskController {
     this.taskRepos = new PrismaORMTaskRepository(<PrismaClient>this.connectionDb.connectionMethod());
     this.tokenFilter = new TaskFilter(<string>config.secret);
     this.taskUseCase = new TaskServices(<TaskRepository<Task>>(<unknown>this.taskRepos));
+    this.observer = new MyTaskObserver();
   }
 
   /**
@@ -33,6 +35,9 @@ export class taskController {
   public async taskMethod() {
     //middleware
     this.app.use(`/api/tasks`, this.tokenFilter.filterMethod);
+
+    //registering Observer
+    this.taskUseCase.registerObserver(this.observer);
 
     //other functions
     this.routeAdapter.taskCreationRoute(this.taskUseCase);
