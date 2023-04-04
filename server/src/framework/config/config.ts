@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import mongoose from "mongoose";
+import mongoose, {Types} from "mongoose";
 
-import {MongoClient, ObjectId} from "mongodb";
+import {MongoClient} from "mongodb";
 
 export const PORT_T = Number(process.env.PORT);
 
@@ -24,7 +24,7 @@ export async function fetchConfig(): Promise<any> {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    const query = {_id: new ObjectId(config_id)};
+    const query = {_id: new Types.ObjectId(config_id)};
     config = await collection.findOne(query);
 
     client.close();

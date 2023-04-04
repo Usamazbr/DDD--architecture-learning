@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  client:
+    build: 
+      context: client
+      dockerfile: ./client.Dockerfile
+    ports:
+      - 3000:3000
+  server:
+    build: 
+      context: server
+      dockerfile: ./server.Dockerfile
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: postgres://database/postgres
+  database:
+    image: postgres:15.2-alpine3.17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: mydatabase
+    ports:
+      - "32780:5432"
+    volumes:
+      - todoApp:/data/db
+volumes:
+  todoApp: 
