@@ -2,10 +2,10 @@ import {Task, TaskManager, TaskObserver} from "../../domain/entities/types/types
 import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
 
 export class TaskServices<T extends Task> implements TaskManager<T> {
-  constructor(private TaskRepos: TaskRepository<T>) {}
   tasks: T[] = [];
   observers: TaskObserver<T>[] = [];
 
+  constructor(private TaskRepos: TaskRepository<T>) {}
   /**
    * createTask
    */
@@ -65,7 +65,8 @@ export class TaskServices<T extends Task> implements TaskManager<T> {
 export class MyTaskObserver<T> implements TaskObserver<T> {
   public onTaskUpdate(subject: TaskManager<T>) {
     if (subject instanceof TaskServices) {
-      console.log(`Tasks updated! ${subject.tasks.map(({message}) => message)}`);
+      console.log(`Observation: Tasks updated!`);
+      subject.tasks.map(({message}) => console.log(message));
     }
   }
 }

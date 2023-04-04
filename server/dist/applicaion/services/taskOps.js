@@ -1,10 +1,10 @@
 export class TaskServices {
     TaskRepos;
+    tasks = [];
+    observers = [];
     constructor(TaskRepos) {
         this.TaskRepos = TaskRepos;
     }
-    tasks = [];
-    observers = [];
     /**
      * createTask
      */
@@ -58,7 +58,8 @@ export class TaskServices {
 export class MyTaskObserver {
     onTaskUpdate(subject) {
         if (subject instanceof TaskServices) {
-            console.log(`Tasks updated! ${subject.tasks.map(({ message }) => message)}`);
+            console.log(`Observation: Tasks updated!`);
+            subject.tasks.map(({ message }) => console.log(message));
         }
     }
 }
