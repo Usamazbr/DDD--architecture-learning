@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   client:
     build: 
@@ -6,6 +7,8 @@ services:
       dockerfile: ./client.Dockerfile
     ports:
       - 3000:3000
+    command: npm run dev
+
   server:
     build: 
       context: server
@@ -14,6 +17,7 @@ services:
       - 3001:3001
     environment:
       DB_URL: postgres://database/postgres
+    command: npm run start:dev
   database:
     image: postgres:15.2-alpine3.17
     environment:

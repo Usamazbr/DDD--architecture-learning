@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import mongoose, { Types } from "mongoose";
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+import { MongoClient, ObjectId } from "mongodb";
 export const PORT_T = Number(process.env.PORT);
 const config_db = process.env.CONFIG_DB;
 const config_id = process.env.DEVELOPMENT;
@@ -16,7 +16,7 @@ export async function fetchConfig() {
         const client = await MongoClient.connect(config_db);
         const db = client.db(dbName);
         const collection = db.collection(collectionName);
-        const query = { _id: new Types.ObjectId(config_id) };
+        const query = { _id: new ObjectId(config_id) };
         config = await collection.findOne(query);
         client.close();
         // console.log(config);
