@@ -61,7 +61,9 @@ describe.skip("Create a user", () => {
         data: {
           name: "Alice",
           email: "alice@example.com",
-          password: "something"
+          password: "something",
+          createdAt: new Date("2023-04-05T12:15:38.307Z"),
+          id: "1234"
         }
       });
       res.json(user);
@@ -73,17 +75,17 @@ describe.skip("Create a user", () => {
     await prisma.$disconnect();
   });
 
-  it("should retrieve a list of users", async () => {
+  it("should retrieve a list of users", async (done) => {
     // Send a GET request to the endpoint
     const response = await request(app).post("/api/user/signup");
-
     // Verify that the response contains the expected data
     expect(response.status).to.equal(200);
     expect(response.body).to.equal({
       name: "Alice",
       email: "alice@example.com",
-      password: "something"
+      createdAt: new Date("2023-04-05T12:15:38.307Z"),
+      id: "1234"
     });
-    return Promise.resolve();
+    done();
   });
 });
