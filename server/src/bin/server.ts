@@ -4,7 +4,7 @@ import {fetchConfig, PORT_T} from "../framework/config/config.js";
 
 import App from "../interface/frontendController/App.js";
 import {TestApp} from "../interface/frontendController/testApp.js";
-import {Config} from "../types/configtypes.js";
+import {Config} from "../framework/types/configtypes.js";
 // import program from "commander";
 
 const expApp = express();
