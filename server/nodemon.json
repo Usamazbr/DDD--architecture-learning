@@ -4,5 +4,5 @@
     ],
     "ignore": [".git", "node_modules/", "dist/"],
     "ext": "js,ts,json",
-    "exec": "npm run build && node dist/.bin/server.js"
+    "exec": "npm run build && node dist/bin/server.js"
 }
