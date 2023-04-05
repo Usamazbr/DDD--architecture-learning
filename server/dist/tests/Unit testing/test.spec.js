@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import sinon from "sinon";
-import { Class1 } from "./testClasses/Class1.js";
-import { TestAuthUseCase } from "./testClasses/Class2.js";
-import { PrismaORMUserRepository } from "../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
-describe.skip(`testMethod`, () => {
+import { Class1 } from "../testClasses/Class1.js";
+import { TestAuthUseCase } from "../testClasses/Class2.js";
+import { PrismaORMUserRepository } from "../../infrastructure/databases/prisma/repositoryAdaptor/prismaUserRepos.js";
+describe(`testMethod`, () => {
     let firstObj;
     //   let secondObj: any;
     beforeEach(() => {
