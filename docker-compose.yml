@@ -18,6 +18,7 @@ services:
     environment:
       DB_URL: postgres://database/postgres
     command: npm run start:dev
+    
   database:
     image: postgres:15.2-alpine3.17
     environment:
@@ -28,5 +29,6 @@ services:
       - "32780:5432"
     volumes:
       - todoApp:/data/db
+      
 volumes:
   todoApp: 
