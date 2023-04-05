@@ -1,3 +1,4 @@
+import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import {fetchConfig, PORT_T} from "../framework/config/config.js";
@@ -22,7 +23,15 @@ testServer.startTest();
 
 //TODO Main App
 const mainApp = async () => {
+  // switching mongodb config to env config
+
   const configuration: Config = await fetchConfig();
+
+  // const configuration: Config = {
+  //   port: Number(process.env.S_PORT),
+  //   db_connect: process.env.DB_CONNECT,
+  //   secret: process.env.SECRET
+  // };
   // console.log(configuration);
   const server = new App(expApp, configuration);
 
