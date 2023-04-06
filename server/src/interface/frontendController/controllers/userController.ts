@@ -37,8 +37,6 @@ export class userController {
     this.userCommandBus = new UserCommandBus();
     this.adapter = new userRouteAdapter(this.app, this.userCommandBus);
     this.userRepos = new PrismaORMUserRepository(<PrismaClient>this.connectionDb.connectionMethod());
-    // this.connectionDb.connectionMethod();
-    // this.tokenAdapter = new JwtAdapter(<string>config.secret);
     this.userAuth = new AuthUseCase(
       new JwtAdapter(<string>config.secret),
       new BcryptAdapter(),

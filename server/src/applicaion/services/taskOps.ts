@@ -1,5 +1,6 @@
 import {Task, TaskManager, TaskObserver} from "../../domain/entities/types/typesTasks.js";
 import {TaskRepository} from "../../domain/repos/taskRepository/taskRepos.js";
+import {EmptyTodoError} from "../../framework/errors/errorHandler.js";
 
 export class TaskServices<T extends Task> implements TaskManager<T> {
   tasks: T[] = [];
@@ -11,7 +12,7 @@ export class TaskServices<T extends Task> implements TaskManager<T> {
    */
   public async createTask(userId: string, message: string) {
     if (!message) {
-      throw Error("Message must be something!");
+      throw new EmptyTodoError(400, "Message must be something!");
     }
     const task = await this.TaskRepos.create(<T>{userId, message});
     this.tasks.push(<T>task);

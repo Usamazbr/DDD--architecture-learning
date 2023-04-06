@@ -1,4 +1,4 @@
-class PaginationOptions {
+export class Paginator {
   constructor(private currentPage = 1, private perPage = 20) {}
 
   limit() {
@@ -13,8 +13,3 @@ class PaginationOptions {
     return (this.currentPage - 1) * this.limit();
   }
 }
-
-module.exports = {
-  PaginationOptions
-};
-

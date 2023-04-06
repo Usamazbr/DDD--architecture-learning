@@ -6,6 +6,8 @@ import {TokenFactory} from "../ports/userInterfacePorts/tokenPort.js";
 import {UserRepository} from "../../domain/repos/userRespository/userRepos.js";
 import {User, UserManager, UserObserver} from "../../domain/entities/types/typesUser.js";
 
+import {InvalidUserDataError, PasswordEncryptionError, UnAuthorizedError} from "../../framework/errors/errorHandler.js";
+
 export class AuthUseCase<T> implements UserManager<T> {
   user!: T;
   observers: UserObserver<T>[] = [];
@@ -23,11 +25,11 @@ export class AuthUseCase<T> implements UserManager<T> {
     console.log(password);
 
     if (!email || !password) {
-      throw Error("All fields must be filled");
+      throw new InvalidUserDataError(400, "All fields must be filled");
     }
     const userDTO = await (<Promise<User>>this.UserRepos.findByEmail(email));
     if (!userDTO) {
-      throw Error("Incorrect email");
+      throw new InvalidUserDataError(400, "Incorrect email");
     }
     const tokenDTO = this.tokenAdapter.createToken(<string>userDTO.id, null);
     // compare hash
@@ -37,7 +39,7 @@ export class AuthUseCase<T> implements UserManager<T> {
     );
     // console.log(compareBool);
     if (!compareBool) {
-      throw Error("Incorrect password");
+      throw new UnAuthorizedError(400, "Incorrect password");
     }
 
     // res.status(200).json({ email, token: tokenDTO.token});
@@ -59,7 +61,7 @@ export class AuthUseCase<T> implements UserManager<T> {
     console.log(unhashedNew);
     const hashDTO = await this.Encrypt.encryptionOperation(unhashedNew);
     if (!hashDTO || !hashDTO.hashed) {
-      throw new Error("Encryption failed");
+      throw new PasswordEncryptionError(400, "Encryption failed");
     }
     const {hashed, level} = hashDTO;
 

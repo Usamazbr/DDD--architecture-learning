@@ -1,3 +1,4 @@
+import { EmptyTodoError } from "../../framework/errors/errorHandler.js";
 export class TaskServices {
     TaskRepos;
     tasks = [];
@@ -10,7 +11,7 @@ export class TaskServices {
      */
     async createTask(userId, message) {
         if (!message) {
-            throw Error("Message must be something!");
+            throw new EmptyTodoError(400, "Message must be something!");
         }
         const task = await this.TaskRepos.create({ userId, message });
         this.tasks.push(task);

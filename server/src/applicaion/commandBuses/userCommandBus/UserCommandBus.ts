@@ -1,3 +1,4 @@
+import {CommandHandlerError} from "../../../framework/errors/errorHandler.js";
 import {ICommand, ICommandHandler} from "./types/commandType.js";
 
 export class UserCommandBus {
@@ -11,7 +12,7 @@ export class UserCommandBus {
     const handler = this.handlers.get(command.constructor.name);
 
     if (!handler) {
-      throw new Error(`No handler registered for command ${command.constructor.name}`);
+      throw new CommandHandlerError(400, `No handler registered for command ${command.constructor.name}`);
     }
 
     return await handler.handle(command);
