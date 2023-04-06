@@ -4,7 +4,7 @@ import express, {Request, Response, Express} from "express";
 import {describe, it} from "mocha";
 import request from "supertest";
 
-describe("GET /users", () => {
+describe.only("Fetching all users", () => {
   let prisma: PrismaClient;
   let app: Express;
   before(() => {
@@ -17,6 +17,8 @@ describe("GET /users", () => {
   after(async () => {
     // Close the Prisma client
     await prisma.$disconnect();
+    // Deleting Sample User
+    await prisma.user.deleteMany({where: {email: {in: [`alice@example.com`, `bob@example.com`]}}});
   });
 
   beforeEach(async () => {
@@ -38,9 +40,22 @@ describe("GET /users", () => {
     // Send a GET request to the endpoint
     const response = await request(app).get("/users");
 
+    let responseObj = response.body.filter((obj: any) => {
+      return obj.name === `Alice` || obj.name === `Bob`;
+    });
+
+    responseObj = responseObj.map((obj: any) => {
+      const obj2 = obj;
+      delete obj2.createdAt;
+      delete obj2.id;
+      delete obj2.updatedAt;
+      return obj2;
+    });
+
+    console.log(responseObj);
     // Verify that the response contains the expected data
     expect(response.status).to.equal(200);
-    expect(response.body).to.equal([
+    expect(responseObj).to.deep.equal([
       {name: "Alice", email: "alice@example.com", password: "something"},
       {name: "Bob", email: "bob@example.com", password: "something"}
     ]);

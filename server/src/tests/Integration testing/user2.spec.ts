@@ -42,7 +42,7 @@ describe.skip("Create User", () => {
     });
   });
 
-  it("should create, retrieve and delete a user", async () => {
+  it("should retrieve a user", async () => {
     // Stub the prisma.user.create method
     const prismaCreateStub = sinon.stub(prisma.user, "create").resolves(sampleUser);
     await prismaCreateStub({data: sampleUser});
