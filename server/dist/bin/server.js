@@ -15,8 +15,8 @@ const testServer = new TestApp(expApp, configuration);
 testServer.startTest();
 //TODO Main App
 const mainApp = async () => {
-    // switching mongodb config to env config
     // const configuration: Config = await fetchConfig();
+    // switching mongodb config to env config
     const configuration = {
         port: Number(process.env.S_PORT),
         db_connect: process.env.DB_CONNECT,

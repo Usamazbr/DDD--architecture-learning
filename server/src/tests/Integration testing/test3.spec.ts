@@ -45,7 +45,7 @@
 //   });
 // });
 
-// describe("Create a user", () => {
+// describe.skip("Create a user", () => {
 //   let prisma: PrismaClient;
 //   let app: any;
 
