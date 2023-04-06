@@ -5,7 +5,7 @@ import express, {Request, Response, Express} from "express";
 import {describe, it} from "mocha";
 import request from "supertest";
 
-describe.only("Create User", () => {
+describe.only("should create, retrieve and delete a user", () => {
   let prisma: PrismaClient;
   let app: Express;
   let sampleUser: any;
@@ -24,6 +24,8 @@ describe.only("Create User", () => {
       password: casual.password
     };
   });
+
+  // clean up
   after(async () => {
     // Close the Prisma client
     await prisma.$disconnect();
